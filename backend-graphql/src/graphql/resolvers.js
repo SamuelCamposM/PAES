@@ -6,7 +6,7 @@ import PreguntasCIencias from "../models/PreguntasCiencias";
 
 export const resolvers = {
   Query: {
-    getPreguntasMath: async () => {
+    getPreguntasMath : async () => {
       return await PreguntasMath.find();
     },
     getPreguntasLenguaje: async () => {

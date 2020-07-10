@@ -102,24 +102,22 @@ const Header = (props) => {
   //extraer informacion de usuario
   const { usuario, usuarioAutenticado, cerrarSesion } = useContext(authContext);
 
-  const [musica, setmusica] = useState({})
-  useEffect(() => {
-    usuarioAutenticado();
-axios.get('https://my-json-server.typicode.com/RochaMoran/musics/get/1')
-.then(res => setmusica(res.data))
-  }, []);
-
+if(!usuario) return null 
   return (
     <Fragment>
+      
       <Cabecera>
         <Wrap>
-          <Titulo>Header</Titulo>
+          <Titulo>
+            <Enlace to="/Home"> 
+            Inicio</Enlace></Titulo> 
           <RightContainer>
-            {usuario ? (
-              <p>
-                hola <span> {usuario.nombre}</span>
-              </p>
-            ) : null}
+       
+
+                <strong>
+                <span>Hola : </span> {usuario.nombre}
+                  </strong> 
+        
             <Enlace to="/Estadisticas">Estadisticas</Enlace>
             <Enlace to="/Perfil">Perfil</Enlace>
             <Enlace to="/Jugar">Jugar</Enlace>
