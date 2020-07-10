@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors"
+import mongoose from "mongoose"
+mongoose.set('useCreateIndex', true);
 //conectar a la base de datos
 import "./config/database";
 import passport from "passport"

@@ -94,7 +94,7 @@ console.log(email, password )
 
 export const autenticarUsuario = async (req, res) => {
  try {
-  console.log(req.usuario)
+  
   const _id = req.usuario.id
   const usuario = await Usuario.findOne({_id}).select('-password')
   res.json({usuario})

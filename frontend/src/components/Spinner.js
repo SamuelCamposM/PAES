@@ -10,7 +10,7 @@ const Spinner = (props) => {
     usuario,
   } = useContext(authContext);
   const valor = document.cookie.split("token=");
-  const [cookie, setCookie] = useState(valor[1]);
+  const [cookie ] = useState(valor[1]);
   useEffect(() => {
     console.log(valor);
     if (!usuario) {

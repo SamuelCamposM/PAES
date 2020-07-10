@@ -23,7 +23,8 @@ const UsuarioSchema = new Schema({
   },
   
   avatar:String,
-  _id: String
+  _id: String,
+  notas : Array 
 });
 
 

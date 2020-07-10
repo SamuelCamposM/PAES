@@ -129,6 +129,18 @@ export const A = styled(Link)`
     color: black;
   }
 `;
+
+export const Google = styled.a`
+  text-decoration: none;
+  color: gray;
+  margin:20px auto;
+  transition: all 500ms;
+  font-size: 15px;
+  &:hover {
+    text-decoration: underline;
+    color: black;
+  }
+`
 export const Contenido = styled.section`
 grid-column:1 / 3;
 display:flex;

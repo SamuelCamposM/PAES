@@ -10,6 +10,7 @@ import {
   A,
   Boton,
   Error,
+  Google
 } from "../style/style";
 import errorContext from "../Context/error/errorContext";
 import authContext from "../Context/auth/authContext";
@@ -115,9 +116,9 @@ const {registrarUsuario , mensaje ,autenticado } = useContext(authContext)
         <Boton>Registrarse</Boton>
         <Contenido>
           <A to={"/login"}>¿Ya tienes una cuenta?</A>
-          <a
+          <Google
           onClick={handleClick}
-          href="http://localhost:4000/auth/google/callback/">Inicia Sesion con Google</a>
+          href="http://localhost:4000/auth/google/callback/">Inicia Sesion con Google</Google>
         </Contenido>
       </Form>
     </Contenedor>
