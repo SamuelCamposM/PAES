@@ -39,14 +39,7 @@ const Home = () => {
     const positionStart = window.pageYOffset;
     const distance = TargetPositionTop - positionStart;
     let   startTime = null;
-    
-    
-    console.log(positionStart);
-
-    console.log(TargetPositionTop);
-    console.log("distance", distance);
-
-    const animationScroll = (currentTime) => {
+        const animationScroll = (currentTime) => {
       if (startTime === null) startTime = currentTime;
       let timeElapsed = currentTime - startTime;
       const run = ease(timeElapsed, positionStart, distance, duration);
@@ -68,9 +61,10 @@ const Home = () => {
   }, []);
 
   return (
-    <Fragment>
+    <div >
       <Header />
-      <Submenu>
+      
+      <Submenu id="submenu">
         <ItemList>
           <Scrollers
             onClick={() => scrooll("seccion1", 1000)}
@@ -100,7 +94,9 @@ const Home = () => {
           </Scrollers>
         </ItemList>
       </Submenu>
-
+      
+<br/>
+<br/><br/>
       <Contenedor>
         <LeftContainer id="seccion1">
           <Titulo>Sobre esta aplicacion </Titulo>
@@ -136,7 +132,7 @@ const Home = () => {
           
         
         </LeftContainer>
-        <RightContainer>
+        <RightContainer >
           <Image src="./img/undraw_gaming_6oy3.svg" alt="" />
         </RightContainer>
 
@@ -162,7 +158,7 @@ const Home = () => {
           <Image src="./img/undraw_studying_s3l7.svg" alt="" />
         </RightContainer>
       </Contenedor>
-    </Fragment>
+    </div>
   );
 };
 
