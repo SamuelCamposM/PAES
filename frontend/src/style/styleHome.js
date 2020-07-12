@@ -15,6 +15,7 @@ grid-column-gap: 20px;
 @media (max-width: 980px) {
   grid-template-columns: 1fr;
   grid-row-gap: 20px;
+  
 }
 `;
 
@@ -27,6 +28,9 @@ border-bottom: 1px solid #676ad1;
 `;
 export const RightContainer = styled.div`
 border-bottom: 1px solid #676ad1;
+display:flex;
+justify-content:center;
+
 `;
 export  const Texto = styled.p`
 margin-top: 15px;
@@ -43,9 +47,12 @@ flex-basis: 100%;
 `;
 
 export  const Image = styled.img`
-width: 90%;
+width: 75%;
 margin-bottom: 30px;
 margin-top: 5px;
+@media(max-width: 900px ){
+margin-top:70px;
+}
 `;
 
 export const Submenu = styled.ul`

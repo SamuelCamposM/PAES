@@ -38,10 +38,17 @@ const Home = () => {
     const TargetPositionTop = target.getBoundingClientRect().top;
     const positionStart = window.pageYOffset;
     const distance = TargetPositionTop - positionStart;
-    const startTime = null;
+    let   startTime = null;
+    
+    
+    console.log(positionStart);
+
+    console.log(TargetPositionTop);
+    console.log("distance", distance);
+
     const animationScroll = (currentTime) => {
       if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
+      let timeElapsed = currentTime - startTime;
       const run = ease(timeElapsed, positionStart, distance, duration);
       window.scrollTo(0, run);
       if (timeElapsed < duration) window.requestAnimationFrame(animationScroll);
@@ -116,18 +123,18 @@ const Home = () => {
             En los modos de juego podras disfrutar de 3 modos de juego tambien
             podras modificar las partidas a tu gusto. Podras invitar a tus
             amigos a competir contigo .
-            <br />
-            <br />
-            <strong> * Solitario</strong>
-            <br />
-            <br />
-            <strong> * 1 vs 1</strong>
-            <br />
-            <br />
-            <strong>
-              * E incluso 4 personas podran competir indivualmente
-            </strong>
+            <br/>
+            <br/>
+           <strong> * Solitario</strong>
+            <br/>
+          <br/>
+          <strong> *  1 vs 1</strong>
+          <br/>
+          <br/>
+          <strong>* E incluso 4 personas podran competir indivualmente</strong>
           </Texto>
+          
+        
         </LeftContainer>
         <RightContainer>
           <Image src="./img/undraw_gaming_6oy3.svg" alt="" />
