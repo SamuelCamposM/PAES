@@ -99,14 +99,14 @@ const AuthState = (props ) =>{
       
         try {
             const usuario = await clienteAxios.get('/usuarios/auth')
-            console.log(usuario.data.usuario)
+            
             dispatch({
                 type: OBTENER_USUARIO,
                 payload: usuario.data.usuario
 
             })
         } catch (error) {
-            console.log(error.response.data.msg);
+            
             dispatch({
                 type:LOGIN_ERROR
             })

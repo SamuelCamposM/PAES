@@ -29,7 +29,7 @@ export default (state, action) => {
         
       }
       case OBTENER_USUARIO :
-        console.log("payload", action.payload)
+        
         return {
           ...state,
           usuario : action.payload,

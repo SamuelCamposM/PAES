@@ -57,17 +57,17 @@ const {registrarUsuario , mensaje ,autenticado } = useContext(authContext)
       confirmarPassword.trim() === "" ||
       nombre.trim() === ""
     ) {
-      mostrarError("todos los campos son obligatorios.", "alerta-error");
+      mostrarError("todos los campos son obligatorios.", "");
       return ;
     }
 
     if(password.length < 6){
-      mostrarError('El password debe ser de al menos de 6 caracteres.', "alerta-error")
+      mostrarError('El password debe ser de al menos de 6 caracteres.', "")
       return ;
     }
 
     if (password !== confirmarPassword ){
-      mostrarError('Asegurate de que las contraseñas sean identicas.', "alerta-error")
+      mostrarError('Asegurate de que las contraseñas sean identicas.', "")
       return;
     }
 

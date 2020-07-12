@@ -3,7 +3,7 @@ import {Route , Redirect} from "react-router-dom"
 import authContext from '../../Context/auth/authContext';
 
 const RutaPrivadaEstadisticas = ({component : Component , ...props }) => {
-    console.log("props",props)
+    
 
     const {autenticado , usuarioAutenticado , cargando} = useContext(authContext)
 

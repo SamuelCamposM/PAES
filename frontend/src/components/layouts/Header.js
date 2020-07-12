@@ -19,7 +19,7 @@ const Cabecera = styled.header`
 `;
 const Wrap = styled.div`
   color: white;
-  width: 85%;
+  width: 90%;
   margin: 0px auto;
   height: 100%;
   display: flex;
@@ -98,7 +98,7 @@ const Enlace = styled(Link)`
 `;
 
 const Header = (props) => {
-  console.log("props", props);
+  
   //extraer informacion de usuario
   const { usuario, usuarioAutenticado, cerrarSesion } = useContext(authContext);
 
