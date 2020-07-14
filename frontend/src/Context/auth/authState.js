@@ -15,7 +15,9 @@ import {REGISTRO_EXITOSO,
     LOGIN_EXITOSO,
     LOGIN_ERROR,
     CERRAR_SESION,
-    REGISTRO_EXITOSO_GOOGLE
+    REGISTRO_EXITOSO_GOOGLE,
+    GET_USUARIOS,
+    GET_USERS_ERROR
 } from "../../types"
 
 const AuthState = (props ) =>{
@@ -24,8 +26,8 @@ const AuthState = (props ) =>{
             autenticado: null,
             usuario: null,
             mensaje: null,
-            cargando : true 
-
+            cargando : true ,
+ usuarios: null
     }
     const [state , dispatch] = useReducer(authReducer , initialState)
 
@@ -147,6 +149,34 @@ const AuthState = (props ) =>{
         })
     }
 
+    const obtenerUsuarios = async ( )=> {
+        try {
+            const token  = localStorage.getItem('token')
+
+            if(token){
+                //funcion que colocca  el token en el header
+                tokenAuth(token)
+            } 
+
+            const usuarios = await  clienteAxios.get('/usuarios/getUsers')
+          console.log(usuarios.data.usuarios)
+dispatch({
+    type:GET_USUARIOS ,
+    payload : usuarios.data.usuarios
+    
+})
+        } catch (error) {
+            const alerta = {
+                msg : error.response.data.msg,
+                categoria :" alerta Error"
+            }
+            dispatch({
+                type: GET_USERS_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
     return <authContext.Provider
     value={{
         //state
@@ -155,12 +185,14 @@ const AuthState = (props ) =>{
         usuario: state.usuario,
         mensaje: state.mensaje,
 cargando :state.cargando,
+usuarios: state.usuarios,
         //funciones
         registrarUsuario,
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
-        registrarGoogle
+        registrarGoogle,
+        obtenerUsuarios
     }}
     >
 

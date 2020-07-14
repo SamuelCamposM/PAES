@@ -35,7 +35,7 @@ const Wrap = styled.div`
 const RightContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width:65%;
   align-items: center;
   height: 100%;
   flex-wrap: wrap;
@@ -53,7 +53,7 @@ const RightContainer = styled.div`
 `;
 
 const Titulo = styled.h1`
-  width: 40%;
+  width: 20%;
   transition:all 500ms;
   letter-spacing:2px;
   text-transform: uppercase;
@@ -118,6 +118,7 @@ if(!usuario) return null
                 <span>Hola : </span> {usuario.nombre}
                   </strong> 
         
+            <Enlace to="/Usuarios">Usuarios</Enlace>
             <Enlace to="/Estadisticas">Estadisticas</Enlace>
             <Enlace to="/Perfil">Perfil</Enlace>
             <Enlace to="/Jugar">Jugar</Enlace>

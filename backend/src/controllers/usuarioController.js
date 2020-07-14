@@ -103,3 +103,15 @@ export const autenticarUsuario = async (req, res) => {
  }
 }
 
+
+export const obtenerUsuarios = async (req ,res ) =>  {
+  try {
+  
+    const usuarios = await Usuario.find().select('-password')
+    console.log(usuarios)
+    res.json({usuarios})
+   } catch (error) {
+      res.json({msg:"hubo un error"})
+   }
+}
+

@@ -4,7 +4,12 @@ import {REGISTRO_EXITOSO,
   LOGIN_EXITOSO,
   LOGIN_ERROR,
   CERRAR_SESION,
-  REGISTRO_EXITOSO_GOOGLE} from "../../types"
+  REGISTRO_EXITOSO_GOOGLE,
+  GET_USERS_ERROR,
+  GET_USUARIOS ,
+} from "../../types"
+
+  
 
 export default (state, action) => {
   switch (action.type) {
@@ -40,6 +45,7 @@ export default (state, action) => {
         case CERRAR_SESION : 
     case REGISTRO_ERROR:
     case LOGIN_ERROR:
+      
       localStorage.removeItem('token')
     return {
       ...state, 
@@ -49,6 +55,11 @@ export default (state, action) => {
       mensaje: action.payload,
       cargando: false
     }
+    case GET_USUARIOS :
+      return {
+        ...state ,
+        usuarios : action.payload
+      }
     default:
       return state;
   }
