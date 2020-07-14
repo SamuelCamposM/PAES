@@ -7,25 +7,60 @@ type   Query {
 }
 
 
+type Pregunta {
+    _id:ID
+    enunciado: String
+    habilidad: String 
+    nivel: String
+    Porcentaje: String
+    imagen: String
+    Justificaciones: [String]
+    JustificacionCorrecta: String
+    respuestas : [Opciones]
+    itemDeAyuda: String
+}    
+
+
 type Opciones {
     correcto: Boolean
     opcion: String
 }
 
-type Pregunta {
-    _id:ID
-    pregunta: String
-respuestas : [Opciones]
-}    
-
-
-
 
 type Mutation {
-    crearPreguntaMath(pregunta: String!, respuestas: [inputOpciones]!) : Pregunta!
-    crearPreguntaLenguaje(pregunta: String!, respuestas: [inputOpciones]!) : Pregunta!
-    crearPreguntaSociales(pregunta: String!, respuestas: [inputOpciones]!) : Pregunta!
-    crearPreguntaCiencias(pregunta: String!, respuestas: [inputOpciones]!) : Pregunta!
+    crearPreguntaMath( enunciado: String,
+        
+        habilidad: String ,
+        nivel: String,
+        Porcentaje: String,
+        imagen: String,
+        Justificaciones: [String],
+        JustificacionCorrecta: String, respuestas: [inputOpciones]!) : Pregunta!
+
+    crearPreguntaLenguaje( enunciado: String,
+        habilidad: String ,
+        itemDeAyuda: String
+        nivel: String,
+        Porcentaje: String,
+        imagen: String,
+        Justificaciones: [String],
+        JustificacionCorrecta: String, respuestas: [inputOpciones]!) : Pregunta!
+        
+    crearPreguntaSociales( enunciado: String,
+        habilidad: String ,
+        nivel: String,
+        Porcentaje: String,
+        imagen: String,
+        Justificaciones: [String],
+        JustificacionCorrecta: String, respuestas: [inputOpciones]!) : Pregunta!
+
+    crearPreguntaCiencias( enunciado: String,
+        habilidad: String ,
+        nivel: String,
+        Porcentaje: String,
+        imagen: String,
+        Justificaciones: [String],
+        JustificacionCorrecta: String, respuestas: [inputOpciones]!) : Pregunta!
 
 }
 input inputOpciones {
@@ -36,11 +71,6 @@ input inputOpciones {
 
 `;
 
-
-
-
-
-
 //Explicacion
 
 // 1) input es para definir tus tipos de datos pero para mutation
@@ -50,4 +80,3 @@ debes definir dos veces si lo usaras para mutation o para querie
 no sabia 
 ya te ha pasado ?
 */
-

@@ -146,7 +146,7 @@ const Home = () => {
         <RightContainer>
           <Image src="./img/undraw_personal_goals_edgd.svg" alt="" />
         </RightContainer>
-
+        
         <LeftContainer id="seccion4">
           <Titulo>Perfil </Titulo>
           <Texto>
@@ -155,7 +155,7 @@ const Home = () => {
           </Texto>
         </LeftContainer>
         <RightContainer>
-          <Image src="./img/undraw_studying_s3l7.svg" alt="" />
+          <Image src="./img/undraw_profile_6l1l.svg" alt="" />
         </RightContainer>
       </Contenedor>
     </div>

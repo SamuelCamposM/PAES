@@ -20,23 +20,82 @@ export const resolvers = {
     },
   },
   Mutation: {
-    crearPreguntaMath: async (_, {pregunta , respuestas} ) => {
-     const newPregunta =  new PreguntasMath({pregunta , respuestas})
+    crearPreguntaMath: async (_, {enunciado,
+      habilidad,
+      respuestas,
+      nivel,
+      Porcentaje,
+      imagen,
+      Justificaciones,
+      JustificacionCorrecta,} ) => {
+     const newPregunta = await new PreguntasMath({enunciado,
+      habilidad,
+      respuestas,
+      nivel,
+      Porcentaje,
+      imagen,
+      Justificaciones,
+      JustificacionCorrecta,})
      await newPregunta.save()
       return  newPregunta;
     },
-    crearPreguntaLenguaje: async (_, {pregunta , respuestas} ) => {
-      const newPregunta =  new PreguntasLenguaje({pregunta , respuestas})
+    crearPreguntaLenguaje:async (_, {enunciado,
+      habilidad,
+      respuestas,
+      nivel,
+      Porcentaje,
+      imagen,
+      Justificaciones,
+      JustificacionCorrecta,
+      itemDeAyuda
+    } ) => {
+      const newPregunta =  new PreguntasLenguaje({enunciado,
+        habilidad,
+        respuestas,
+        nivel,
+        Porcentaje,
+        imagen,
+        Justificaciones,
+        JustificacionCorrecta,
+        itemDeAyuda})
       await newPregunta.save()
        return  newPregunta;
      },
-     crearPreguntaSociales: async (_, {pregunta , respuestas} ) => {
-      const newPregunta =  new PreguntasSociales({pregunta , respuestas})
+     crearPreguntaSociales:async (_, {enunciado,
+      habilidad,
+      respuestas,
+      nivel,
+      Porcentaje,
+      imagen,
+      Justificaciones,
+      JustificacionCorrecta,} ) => {
+      const newPregunta =  new PreguntasSociales({enunciado,
+        habilidad,
+        respuestas,
+        nivel,
+        Porcentaje,
+        imagen,
+        Justificaciones,
+        JustificacionCorrecta,})
       await newPregunta.save()
        return  newPregunta;
      },
-     crearPreguntaCiencias: async (_, {pregunta , respuestas} ) => {
-      const newPregunta =  new PreguntasCIencias({pregunta , respuestas})
+     crearPreguntaCiencias:async (_, {enunciado,
+      habilidad,
+      respuestas,
+      nivel,
+      Porcentaje,
+      imagen,
+      Justificaciones,
+      JustificacionCorrecta,} ) => {
+      const newPregunta =  new PreguntasCIencias({enunciado,
+        habilidad,
+        respuestas,
+        nivel,
+        Porcentaje,
+        imagen,
+        Justificaciones,
+        JustificacionCorrecta,})
       await newPregunta.save()
        return  newPregunta;
      },
@@ -51,3 +110,36 @@ export const resolvers = {
 //   { correcto: false, opcion: "opcion de prueba" },
 //   { correcto: false, opcion: "opcion de prueba" },
 // ],
+
+
+
+
+
+// mutation{
+//   crearPreguntaMath( enunciado: "enunciado",
+//         habilidad: "habiliadad" ,
+//         nivel: "nivel",
+//         Porcentaje: "porcentaje",
+//         imagen: "imagen",
+//         Justificaciones: ["justificacion a ", "mala b" , "mala c"],
+//         JustificacionCorrecta: "respuesta correcta d", respuestas: [
+//           {correcto:false , opcion:"opcion 1"},
+//           {correcto:false , opcion:"opcion 2"},
+//           {correcto:false , opcion:"opcion 3"},
+//           {correcto:true , opcion:"opcion 4"},
+//         ]
+//   ) {
+//     _id
+//     enunciado
+//     habilidad
+//     nivel
+//     Porcentaje
+//     imagen
+//     Justificaciones
+//     JustificacionCorrecta
+//      respuestas{
+//       correcto
+//       opcion
+//     }
+//   }
+// }
