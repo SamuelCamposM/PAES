@@ -8,7 +8,7 @@ const Cabecera = styled.header`
   width: 100%;
   display:flex;
   align-items:center;
-  min-height:15vh;
+  min-height:10vh;
   background-color: #303e9f;
   box-shadow: 0px 2px 3px #00196e;
   

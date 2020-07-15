@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import Usuario from "../models/Usuario";
 import bcrypt from "bcryptjs";
 import mongoose, { Mongoose } from "mongoose";
+
 //creando el usuario
 export const crearUsuario = async (req, res) => {
   const { email, password, nombre } = req.body;
@@ -14,13 +15,12 @@ export const crearUsuario = async (req, res) => {
       return res.status(400).json({ msg: "usuario ya eiste" });
     }
 
-
     const newUser = await new Usuario({ email, nombre });
 
     const salt = await bcrypt.genSalt(10);
     newUser.password = await bcrypt.hash(password, salt);
 
-    newUser._id = mongoose.Types.ObjectId()
+    newUser._id = mongoose.Types.ObjectId();
     await newUser.save();
 
     //crear y devolver jwr
@@ -41,7 +41,7 @@ export const crearUsuario = async (req, res) => {
         if (err) {
           throw err;
         }
-        console.log(token)
+        console.log(token);
         res.json({ token });
       }
     );
@@ -53,7 +53,7 @@ export const crearUsuario = async (req, res) => {
 
 export const iniciarSesion = async (req, res) => {
   const { email, password } = req.body;
-console.log(email, password )
+  console.log(email, password);
   try {
     let usuario = await Usuario.findOne({ email });
     if (!usuario) {
@@ -91,27 +91,55 @@ console.log(email, password )
   }
 };
 
-
 export const autenticarUsuario = async (req, res) => {
- try {
-  
-  const _id = req.usuario.id
-  const usuario = await Usuario.findOne({_id}).select('-password')
-  res.json({usuario})
- } catch (error) {
-    res.json({msg:"hubo un error"})
- }
-}
-
-
-export const obtenerUsuarios = async (req ,res ) =>  {
   try {
-  
-    const usuarios = await Usuario.find().select('-password')
-    console.log(usuarios)
-    res.json({usuarios})
-   } catch (error) {
-      res.json({msg:"hubo un error"})
-   }
-}
+    const _id = req.usuario.id;
+    const usuario = await Usuario.findOne({ _id }).select("-password");
+    res.json({ usuario });
+  } catch (error) {
+    res.json({ msg: "hubo un error" });
+  }
+};
 
+export const obtenerUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find().select("-password");
+    console.log(usuarios);
+    res.json({ usuarios });
+  } catch (error) {
+    res.json({ msg: "hubo un error" });
+  }
+};
+
+export const addFriend = async (req, res) => {
+  try {
+    const _id = req.usuario.id; //id del usuario actual
+    //el req.body es el id del usuario que se quiere agregar como amigo
+    let user = await Usuario.findOne(
+      { _id },
+      { amigos: req.body.id },
+      { "amigos.$": false }
+    );
+    console.log("usuario", user);
+    let resultado = await user.amigos.some((amigo) => amigo === req.body.id);
+
+    if (resultado) {
+      return res.status(401).json({ msg: "usuario ya agregado" });
+    }
+    //agregando como amigo al usuario seleccionado
+    await Usuario.update({ _id }, { $push: { amigos: req.body.id } });
+    //agregandome como amigo del usuario seleccionado
+    await Usuario.update({ _id: req.body.id }, { $push: { amigos: _id } });
+    //devolviendo amigos actualizados
+    user = await Usuario.findOne(
+      { _id },
+      { amigos: req.body.id },
+      { "amigos.$": false }
+    );
+    console.log(user.amigos);
+    res.status(200).json({ amigos: user.amigos });
+  } catch (error) {
+    console.log(error);
+    res.status(402).json({ msg: "Hubo un error" });
+  }
+};

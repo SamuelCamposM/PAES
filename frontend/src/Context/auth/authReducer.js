@@ -7,6 +7,8 @@ import {REGISTRO_EXITOSO,
   REGISTRO_EXITOSO_GOOGLE,
   GET_USERS_ERROR,
   GET_USUARIOS ,
+  CARGAR_AMIGOS ,
+  CARGAR_AMIGOS_ERR
 } from "../../types"
 
   
@@ -53,13 +55,34 @@ export default (state, action) => {
       autenticado: null,
       usuario: null,
       mensaje: action.payload,
-      cargando: false
+      cargando: false,
+      usuarios: null,
     }
     case GET_USUARIOS :
+    
       return {
+        
         ...state ,
         usuarios : action.payload
       }
+      case CARGAR_AMIGOS :
+   
+        let usuario = {
+          ...state.usuario ,
+          amigos : action.payload 
+        }
+    
+        return {
+          ...state, 
+          usuario 
+                        
+        }
+
+        case CARGAR_AMIGOS_ERR :
+          return {
+            ...state ,
+            mensaje : action.payload
+          }
     default:
       return state;
   }

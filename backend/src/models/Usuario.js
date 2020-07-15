@@ -24,7 +24,11 @@ const UsuarioSchema = new Schema({
   
   avatar:String,
   _id: String,
-  notas : Array 
+  notas : Array ,
+  amigos : {
+    type: Array
+  }
+
 });
 
 

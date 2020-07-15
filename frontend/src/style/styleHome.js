@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 export const Contenedor = styled.div`
-width: 94%;
+width: 95%;
 min-height: 80vh;
 height: 100vh;
 padding-bottom: 20px;
@@ -20,6 +20,8 @@ grid-column-gap: 20px;
 `;
 
 export const LeftContainer = styled.div`
+
+
 border-bottom: 1px solid #676ad1;
 @media (max-width: 980px) {
   border-bottom: none;
@@ -63,7 +65,7 @@ export const Submenu = styled.ul`
 width: 100%;
 display: flex;
 margin: 0 auto;
-height: 10vh;
+height: 8vh;
 align-items: center;
 justify-content: space-around;
 text-align: center;

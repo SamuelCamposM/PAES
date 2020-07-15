@@ -23,7 +23,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       const user = await User.findById(profile.id); // si el usuario no existe
       console.log(profile)
-      console.log("desde controlador", user); //lo creamos
+      console.log("desde controlador", done); //lo creamos
       const { _json } = profile;
       const { name, picture } = _json;
       if (user) {
