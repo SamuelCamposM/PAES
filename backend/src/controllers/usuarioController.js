@@ -47,14 +47,14 @@ export const crearUsuario = async (req, res) => {
       }
     );
   } catch (error) {
-    console.log("error creando usuario", error);
+    
     res.json({ msg: "error al crear usuario" });
   }
 };
 
 export const iniciarSesion = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  
   try {
     let usuario = await Usuario.findOne({ email });
     if (!usuario) {
@@ -87,7 +87,7 @@ export const iniciarSesion = async (req, res) => {
       }
     );
   } catch (error) {
-    console.log("error iniciando sesion", error);
+    
     res.status(401).json({ msg: "error al crear usuario" });
   }
 };
@@ -105,7 +105,7 @@ export const autenticarUsuario = async (req, res) => {
 export const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find().select("-password");
-    console.log(usuarios);
+    
     res.json({ usuarios });
   } catch (error) {
     res.json({ msg: "hubo un error" });
@@ -116,15 +116,15 @@ export const addFriend = async (req, res) => {
   try {
     
     
-const {idReceptor, idEmisor} = req.body
+const {idReceptor, idEmisor , _id} = req.body
      let user = await Usuario.findOne(
        { _id :idEmisor },
        { amigos: idReceptor},
        { "amigos.$": false }
      );
-     console.log("usuario", user);
+     
      let resultado = await user.amigos.some((amigo) => amigo === idReceptor);
- console.log(resultado)
+ 
      if (resultado) {
        return res.status(401).json({ msg: "usuario ya agregado" });
      }
@@ -138,11 +138,12 @@ const {idReceptor, idEmisor} = req.body
        { amigos: idEmisor },
        { "amigos.$": false }
      );
-     console.log(user.amigos);
      
-     res.status(200).json({ amigos: user.amigos });
+     await Request.findOneAndDelete({_id})
+     
+     res.status(200).json({ amigos: user.amigos  });
 } catch (error) {
-    console.log(error);
+    
     res.status(402).json({ msg: "Hubo un error" });
   }
 };
@@ -150,11 +151,11 @@ const {idReceptor, idEmisor} = req.body
 export const gettingRequest = async (req, res) => {
   try {
     const { idReceptor, nombreEmisor, idEmisor, imagenEmisor } = req.body;
-  console.log(idReceptor, nombreEmisor, idEmisor, imagenEmisor );
+
 
   const solicitud = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
   
-  console.log("creando solicitud",solicitud)
+  
   await solicitud.save()
   res.json({ solicitud});
   } catch (error) {
@@ -165,9 +166,17 @@ export const gettingRequest = async (req, res) => {
 
 export const getSolicitudes = async (req, res )=> {
   const {idReceptor} = req.body
-  console.log(idReceptor)
+  
     const solicitudes =  await  Request.find({idReceptor})
-     console.log("solicitudes",solicitudes)
+     
       
       res.json({solicitudes})
+}
+
+export const deleteSolicitudes = async (req , res )=> {
+  const  {_id} = req.body
+console.log(req.body)
+  const solicitud  = await Request.findOneAndDelete({_id})
+
+  res.json({solicitud})
 }

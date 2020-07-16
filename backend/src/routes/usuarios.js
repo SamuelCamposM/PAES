@@ -6,7 +6,8 @@ import {
   obtenerUsuarios,
   addFriend,
   gettingRequest,
-  getSolicitudes
+  getSolicitudes,
+  deleteSolicitudes
 } from "../controllers/usuarioController";
 //middleware
 import token from "../middlewares/token";
@@ -23,5 +24,7 @@ router.get("/getUsers", token, obtenerUsuarios);
 router.post("/gettigRequest", token, gettingRequest);
 router.post("/addFriend", token, addFriend);
 router.post("/getSolicitudes" , token , getSolicitudes)
+
+router.post('/deleteSolicitudes', token , deleteSolicitudes)
 
 module.exports = router;
