@@ -114,32 +114,34 @@ export const obtenerUsuarios = async (req, res) => {
 
 export const addFriend = async (req, res) => {
   try {
-    const _id = req.usuario.id; //id del usuario actual
-    //el req.body es el id del usuario que se quiere agregar como amigo
-    let user = await Usuario.findOne(
-      { _id },
-      { amigos: req.body.id },
-      { "amigos.$": false }
-    );
-    console.log("usuario", user);
-    let resultado = await user.amigos.some((amigo) => amigo === req.body.id);
-
-    if (resultado) {
-      return res.status(401).json({ msg: "usuario ya agregado" });
-    }
-    //agregando como amigo al usuario seleccionado
-    await Usuario.update({ _id }, { $push: { amigos: req.body.id } });
-    //agregandome como amigo del usuario seleccionado
-    await Usuario.update({ _id: req.body.id }, { $push: { amigos: _id } });
-    //devolviendo amigos actualizados
-    user = await Usuario.findOne(
-      { _id },
-      { amigos: req.body.id },
-      { "amigos.$": false }
-    );
-    console.log(user.amigos);
-    res.status(200).json({ amigos: user.amigos });
-  } catch (error) {
+    
+    
+const {idReceptor, idEmisor} = req.body
+     let user = await Usuario.findOne(
+       { _id :idEmisor },
+       { amigos: idReceptor},
+       { "amigos.$": false }
+     );
+     console.log("usuario", user);
+     let resultado = await user.amigos.some((amigo) => amigo === idReceptor);
+ console.log(resultado)
+     if (resultado) {
+       return res.status(401).json({ msg: "usuario ya agregado" });
+     }
+     //agregando como amigo al usuario seleccionado
+     await Usuario.update({ _id :idEmisor }, { $push: { amigos: idReceptor  } });
+     //agregandome como amigo del usuario seleccionado
+     await Usuario.update({ _id: idReceptor  }, { $push: { amigos:idEmisor} });
+     //devolviendo amigos actualizados
+     user = await Usuario.findOne(
+       {  _id :idReceptor },
+       { amigos: idEmisor },
+       { "amigos.$": false }
+     );
+     console.log(user.amigos);
+     
+     res.status(200).json({ amigos: user.amigos });
+} catch (error) {
     console.log(error);
     res.status(402).json({ msg: "Hubo un error" });
   }
@@ -152,8 +154,8 @@ export const gettingRequest = async (req, res) => {
 
   const solicitud = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
   
-  solicitud.save()
-
+  console.log("creando solicitud",solicitud)
+  await solicitud.save()
   res.json({ solicitud});
   } catch (error) {
     res.status(401).json({msg :"Error al enviar la solicitud"})

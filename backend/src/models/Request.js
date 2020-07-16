@@ -19,8 +19,7 @@ const RequestSchema = new Schema({
     },    
     imagenEmisor :{
         type:String,
-        required:true,
-        trim:true
+
     }    ,    
 });
 

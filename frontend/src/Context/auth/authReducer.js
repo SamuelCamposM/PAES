@@ -1,4 +1,5 @@
-import {REGISTRO_EXITOSO,
+import {
+  REGISTRO_EXITOSO,
   REGISTRO_ERROR,
   OBTENER_USUARIO,
   LOGIN_EXITOSO,
@@ -6,91 +7,86 @@ import {REGISTRO_EXITOSO,
   CERRAR_SESION,
   REGISTRO_EXITOSO_GOOGLE,
   GET_USERS_ERROR,
-  GET_USUARIOS ,
-  CARGAR_AMIGOS ,
+  GET_USUARIOS,
+  CARGAR_AMIGOS,
   CARGAR_AMIGOS_ERR,
-  GET_SOLICITUDES
-} from "../../types"
-
-  
+  GET_SOLICITUDES,
+} from "../../types";
 
 export default (state, action) => {
   switch (action.type) {
     case REGISTRO_EXITOSO_GOOGLE:
- 
-      localStorage.setItem('token', action.payload)
-  
+      localStorage.setItem("token", action.payload);
+
       return {
-        ...state ,
+        ...state,
         autenticado: true,
-        mensaje : null,
-        cargando : false
-       }
+        mensaje: null,
+        cargando: false,
+      };
     case LOGIN_EXITOSO:
     case REGISTRO_EXITOSO:
-      localStorage.setItem('token', action.payload.token) 
-      return{
-        ...state, 
-        autenticado : true,
-        mensaje : null ,
-        cargando: false
-        
-      }
-      case OBTENER_USUARIO :
-        
-        return {
-          ...state,
-          usuario : action.payload,
-          autenticado: true,
-          cargando: false
-          
-        }
-        case CERRAR_SESION : 
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        autenticado: true,
+        mensaje: null,
+        cargando: false,
+      };
+    case OBTENER_USUARIO:
+      return {
+        ...state,
+        usuario: action.payload,
+        autenticado: true,
+        cargando: false,
+      };
+    case CERRAR_SESION:
     case REGISTRO_ERROR:
     case LOGIN_ERROR:
-      
-      localStorage.removeItem('token')
-    return {
-      ...state, 
-      token : null ,
-      autenticado: null,
-      usuario: null,
-      mensaje: action.payload,
-      cargando: false,
-      usuarios: null,
-    }
-    case GET_USUARIOS :
-    
+      localStorage.removeItem("token");
       return {
+        ...state,
+        token: null,
+        autenticado: null,
+        usuario: null,
+        mensaje: action.payload,
+        cargando: false,
+        usuarios: null,
+        solicitudes: null,
+      };
+    case GET_USUARIOS:
+      console.log('cargando usuarios')
+      return {
+        ...state,
+        usuarios: action.payload,
+        cargarUsuarios: false
+      };
+    case CARGAR_AMIGOS:
+      console.log(action.payload);
+      let usuario = {
+        ...state.usuario,
+        amigos: action.payload,
         
-        ...state ,
-        usuarios : action.payload
-      }
-      case CARGAR_AMIGOS :
-   
-        let usuario = {
-          ...state.usuario ,
-          amigos : action.payload 
-        }
-    
-        return {
-          ...state, 
-          usuario 
-                        
-        }
+      };
 
-        case CARGAR_AMIGOS_ERR :
-          return {
-            ...state ,
-            mensaje : action.payload
-          }
-          case GET_SOLICITUDES : 
-          return {
-            ...state ,
-            solicitudes : action.payload
-          }
+      return {
+        ...state,
+        usuario,
+        cargarUsuarios: true 
+      };
+
+    case CARGAR_AMIGOS_ERR:
+      return {
+        ...state,
+        mensaje: action.payload,
+        
+      };
+    case GET_SOLICITUDES:
+      return {
+        ...state,
+        solicitudes: action.payload,
+      };
     default:
       return state;
   }
 };
-

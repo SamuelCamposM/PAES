@@ -48,17 +48,22 @@ grid-column-gap: 20px;
 }
 `
 const Usuarios = () => {
-  const { obtenerUsuarios, usuarios , usuario ,solicitudes ,obtenerSolicitudes } = useContext(authContext);
+  const { obtenerUsuarios, usuarios , usuario ,solicitudes ,obtenerSolicitudes , cargarUsuarios} = useContext(authContext);
   useEffect(() => {
+    if (cargarUsuarios ) {
+      obtenerUsuarios()
+      
+    }
+   
     if (!usuarios ) {
         obtenerUsuarios();
         
     }
-    if (!solicitudes && usuario) {
+    if (!solicitudes &&  usuario) {
       obtenerSolicitudes(usuario._id)
-      
+       
     }
-}, [usuarios ,solicitudes ,usuario ]);
+}, [usuarios ,solicitudes , usuario  , cargarUsuarios ]);
   if (!usuarios) return <Titulo> Usuarios </Titulo>;
    if(!usuario) return null
 

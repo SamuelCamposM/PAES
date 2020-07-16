@@ -21,7 +21,7 @@ import {
   GET_USERS_ERROR,
   CARGAR_AMIGOS,
   CARGAR_AMIGOS_ERR,
-  GET_SOLICITUDES
+  GET_SOLICITUDES,
 } from "../../types";
 
 const AuthState = (props) => {
@@ -32,7 +32,8 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     usuarios: null,
-    solicitudes : null
+    solicitudes: null,
+    cargarUsuarios: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -148,7 +149,7 @@ const AuthState = (props) => {
       const usuarios = await clienteAxios.get("/usuarios/getUsers");
 
       dispatch({
-        type: GET_USUARIOS,
+        type: GET_USUARIOS, //false
         payload: usuarios.data.usuarios,
       });
     } catch (error) {
@@ -163,7 +164,7 @@ const AuthState = (props) => {
     }
   };
 
-  const agregarAmigo = async (id) => {
+  const agregarAmigo = async (datos) => {
     const token = localStorage.getItem("token");
     if (token) {
       //funcion que colocca  el token en el header
@@ -171,14 +172,14 @@ const AuthState = (props) => {
     }
 
     try {
-      const nuevoDato = await clienteAxios.post("/usuarios/addFriend", { id });
+      const nuevoDato = await clienteAxios.post("/usuarios/addFriend", datos);
 
-      dispatch({
-        type: CARGAR_AMIGOS,
+      await dispatch({
+        type: CARGAR_AMIGOS, //true
         payload: nuevoDato.data.amigos,
       });
-
-      await obtenerUsuarios();
+      
+      
     } catch (error) {
       const alerta = {
         msg: error.response.data.msg,
@@ -191,36 +192,37 @@ const AuthState = (props) => {
     }
   };
 
-
-  const enviarSolicitud =async (datos) => {
+  const enviarSolicitud = async (datos) => {
     const token = localStorage.getItem("token");
     if (token) {
       //funcion que colocca  el token en el header
       tokenAuth(token);
     }
-console.log(datos)
-    const solicitud  = await   clienteAxios.post('/usuarios/gettigRequest' ,datos )
-    console.log(solicitud)
-  }
+    console.log(datos);
+    const solicitud = await clienteAxios.post("/usuarios/gettigRequest", datos);
+    console.log(solicitud);
+  };
 
-const obtenerSolicitudes = async (idReceptor) => {
- try {
-  const token = localStorage.getItem("token");
-  if (token) {
-    //funcion que colocca  el token en el header
-    tokenAuth(token);
-  }
-console.log(idReceptor)
-const solicitudes = await clienteAxios.post("/usuarios/getSolicitudes", {idReceptor})
-console.log(solicitudes)
-dispatch({
-  type: GET_SOLICITUDES,
-  payload: solicitudes.data.solicitudes
-})
- } catch (error) {
-   console.log(error)
- }
-}
+  const obtenerSolicitudes = async (idReceptor) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        //funcion que colocca  el token en el header
+        tokenAuth(token);
+      }
+      console.log(idReceptor);
+      const solicitudes = await clienteAxios.post("/usuarios/getSolicitudes", {
+        idReceptor,
+      });
+      console.log(solicitudes);
+      dispatch({
+        type: GET_SOLICITUDES,
+        payload: solicitudes.data.solicitudes,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <authContext.Provider
@@ -232,7 +234,8 @@ dispatch({
         mensaje: state.mensaje,
         cargando: state.cargando,
         usuarios: state.usuarios,
-        solicitudes :state.solicitudes,
+        solicitudes: state.solicitudes,
+        cargarUsuarios: state.cargarUsuarios,
         //funciones
         registrarUsuario,
         iniciarSesion,
@@ -242,7 +245,7 @@ dispatch({
         obtenerUsuarios,
         agregarAmigo,
         enviarSolicitud,
-        obtenerSolicitudes
+        obtenerSolicitudes,
       }}
     >
       {props.children}

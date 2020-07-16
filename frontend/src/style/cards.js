@@ -28,15 +28,29 @@ margin:0 auto;
 border-radius:100px;
 `;
 export const AddFriend = styled.button`
-border:1px solid #12005e;
+border:1px solid transparent;
 transition:all 500ms ;
 background-color:#4a148c;
-padding:5px;
+padding:10px;
 color:white;
 border-radius:8px;
-width:50%;
+
 margin:0 auto;
 &:hover{
   background-color:#12005e;
+}
+`;
+
+export const DeleteFriend = styled.button`
+border:1px solid transparent;
+transition:all 500ms ;
+background-color:#d50000;
+padding:8px;
+color:white;
+border-radius:8px;
+
+margin:0 auto;
+&:hover{
+  background-color:#9b0000;
 }
 `;

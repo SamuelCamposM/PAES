@@ -1,12 +1,10 @@
 import React, { Fragment, useContext } from "react";
-import styled from "@emotion/styled";
-import { Image } from "../../style/styleHome";
-import Usuarios from "../Usuarios";
+
 import authContext from "../../Context/auth/authContext";
-import { Card, Imgbox, ProfileAvatar, AddFriend } from "../../style/cards";
+import { Card,  ProfileAvatar, AddFriend  , DeleteFriend} from "../../style/cards";
 
 const UserCard = (props) => {
-  const { usuario, agregarAmigo, enviarSolicitud } = useContext(authContext);
+  const { usuario, agregarAmigo, enviarSolicitud , solicitudes} = useContext(authContext);
   if (usuario._id === props.usuario._id) return null;
   const datos = {
     idReceptor: props.usuario._id,
@@ -24,7 +22,7 @@ const UserCard = (props) => {
         <ProfileAvatar src={props.usuario.avatar} alt="imagen de perfil" />
         <h5>{props.usuario.nombre} </h5>
         {agregado ? (
-          <AddFriend onClick={() => HandleClick()}> Eliminar </AddFriend>
+          <DeleteFriend onClick={() => HandleClick()}> Eliminar Amigo</DeleteFriend>
         ) : (
           <AddFriend onClick={() => HandleClick()}> agregar </AddFriend>
         )}
