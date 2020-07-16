@@ -11,6 +11,7 @@ import {
   CARGAR_AMIGOS,
   CARGAR_AMIGOS_ERR,
   GET_SOLICITUDES,
+  DELTE_SOLICITUD,
 } from "../../types";
 
 export default (state, action) => {
@@ -86,6 +87,12 @@ export default (state, action) => {
         ...state,
         solicitudes: action.payload,
       };
+      case DELTE_SOLICITUD  :
+        
+      return {
+        ...state,
+        solicitudes:  state.solicitudes.filter(solicitud => solicitud._id !== action.payload)
+      }
     default:
       return state;
   }

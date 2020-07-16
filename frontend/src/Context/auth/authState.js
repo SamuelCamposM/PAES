@@ -22,6 +22,7 @@ import {
   CARGAR_AMIGOS,
   CARGAR_AMIGOS_ERR,
   GET_SOLICITUDES,
+  DELTE_SOLICITUD
 } from "../../types";
 
 const AuthState = (props) => {
@@ -178,8 +179,8 @@ const AuthState = (props) => {
         type: CARGAR_AMIGOS, //true
         payload: nuevoDato.data.amigos,
       });
-      
-      
+
+      obtenerSolicitudes(datos.idReceptor);
     } catch (error) {
       const alerta = {
         msg: error.response.data.msg,
@@ -224,6 +225,25 @@ const AuthState = (props) => {
     }
   };
 
+  const deleteFriendRequest = async (_id) => {
+try {
+  const token = localStorage.getItem("token");
+  if (token) {
+    //funcion que colocca  el token en el header
+    tokenAuth(token);
+  }
+  const solicitud = await clienteAxios.post("/usuarios/deleteSolicitudes",  _id);
+console.log(solicitud)
+dispatch({
+  type: DELTE_SOLICITUD,
+  payload : solicitud.data.solicitud._id
+})
+} catch (error) {
+  
+}
+
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -246,6 +266,7 @@ const AuthState = (props) => {
         agregarAmigo,
         enviarSolicitud,
         obtenerSolicitudes,
+        deleteFriendRequest
       }}
     >
       {props.children}

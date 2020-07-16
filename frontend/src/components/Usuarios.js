@@ -81,9 +81,9 @@ const Usuarios = () => {
      <ColumnaIzquierda>
         <Texto> Solicitudes</Texto>
   
-{solicitudes ? solicitudes.map((solicitud)=> (
+{solicitudes  ? solicitudes.map((solicitud)=> (
   <CardSoliciud solicitud={solicitud} key={solicitud._id}/>
-)) :  <Texto> No hay solicitudes</Texto> }
+)) :  <Texto> No hay solicitudes.</Texto> }
 
 
      </ColumnaIzquierda>
