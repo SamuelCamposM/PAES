@@ -20,7 +20,8 @@ import {
   GET_USUARIOS,
   GET_USERS_ERROR,
   CARGAR_AMIGOS,
-  CARGAR_AMIGOS_ERR
+  CARGAR_AMIGOS_ERR,
+  GET_SOLICITUDES
 } from "../../types";
 
 const AuthState = (props) => {
@@ -31,6 +32,7 @@ const AuthState = (props) => {
     mensaje: null,
     cargando: true,
     usuarios: null,
+    solicitudes : null
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
@@ -38,8 +40,6 @@ const AuthState = (props) => {
 
   //funciones
   const registrarGoogle = async (cookie) => {
-
-
     try {
       //coloca el token en el local storage
       if (!cookie) {
@@ -52,7 +52,6 @@ const AuthState = (props) => {
       //obtener el usuario
       usuarioAutenticado();
     } catch (error) {
-
       const alerta = {
         msg: error.response.data.mensaje,
         categoria: "alerta-error",
@@ -67,7 +66,6 @@ const AuthState = (props) => {
   const registrarUsuario = async (datos) => {
     try {
       const respuesta = await clienteAxios.post("/usuarios/", datos);
-     
 
       dispatch({
         type: REGISTRO_EXITOSO,
@@ -75,7 +73,6 @@ const AuthState = (props) => {
       });
       usuarioAutenticado();
     } catch (error) {
-   
       const alerta = {
         msg: error.response.data.msg,
         categoria: " alerta Error",
@@ -115,7 +112,6 @@ const AuthState = (props) => {
   const iniciarSesion = async (datos) => {
     try {
       const token = await clienteAxios.post("/usuarios/login", datos);
-      
 
       dispatch({
         type: LOGIN_EXITOSO,
@@ -124,7 +120,6 @@ const AuthState = (props) => {
 
       usuarioAutenticado();
     } catch (error) {
-  
       const alerta = {
         msg: error.response.data.msg,
         categoria: " alerta Error",
@@ -168,38 +163,64 @@ const AuthState = (props) => {
     }
   };
 
-   const agregarAmigo = async(id) => {
-       const token = localStorage.getItem("token");
-       if (token) {
-           //funcion que colocca  el token en el header
-           tokenAuth(token);
-        }
+  const agregarAmigo = async (id) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //funcion que colocca  el token en el header
+      tokenAuth(token);
+    }
 
-     try {
-      const nuevoDato = await clienteAxios.post('/usuarios/addFriend' , {id})
-    
-     
+    try {
+      const nuevoDato = await clienteAxios.post("/usuarios/addFriend", { id });
+
       dispatch({
-        type:CARGAR_AMIGOS,
-        payload : nuevoDato.data.amigos
-      })
-      
-    
+        type: CARGAR_AMIGOS,
+        payload: nuevoDato.data.amigos,
+      });
 
-    
-   await obtenerUsuarios()
-     } catch (error) {
+      await obtenerUsuarios();
+    } catch (error) {
       const alerta = {
         msg: error.response.data.msg,
         categoria: " alerta Error",
       };
-       dispatch({
+      dispatch({
         type: CARGAR_AMIGOS_ERR,
-        payload:alerta
+        payload: alerta,
       });
-     }
-     
-   }
+    }
+  };
+
+
+  const enviarSolicitud =async (datos) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //funcion que colocca  el token en el header
+      tokenAuth(token);
+    }
+console.log(datos)
+    const solicitud  = await   clienteAxios.post('/usuarios/gettigRequest' ,datos )
+    console.log(solicitud)
+  }
+
+const obtenerSolicitudes = async (idReceptor) => {
+ try {
+  const token = localStorage.getItem("token");
+  if (token) {
+    //funcion que colocca  el token en el header
+    tokenAuth(token);
+  }
+console.log(idReceptor)
+const solicitudes = await clienteAxios.post("/usuarios/getSolicitudes", {idReceptor})
+console.log(solicitudes)
+dispatch({
+  type: GET_SOLICITUDES,
+  payload: solicitudes.data.solicitudes
+})
+ } catch (error) {
+   console.log(error)
+ }
+}
 
   return (
     <authContext.Provider
@@ -211,6 +232,7 @@ const AuthState = (props) => {
         mensaje: state.mensaje,
         cargando: state.cargando,
         usuarios: state.usuarios,
+        solicitudes :state.solicitudes,
         //funciones
         registrarUsuario,
         iniciarSesion,
@@ -218,7 +240,9 @@ const AuthState = (props) => {
         cerrarSesion,
         registrarGoogle,
         obtenerUsuarios,
-        agregarAmigo
+        agregarAmigo,
+        enviarSolicitud,
+        obtenerSolicitudes
       }}
     >
       {props.children}

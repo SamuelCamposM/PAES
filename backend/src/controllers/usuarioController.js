@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import Usuario from "../models/Usuario";
 import bcrypt from "bcryptjs";
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
+import Request from "../models/Request";
 
 //creando el usuario
 export const crearUsuario = async (req, res) => {
@@ -143,3 +144,28 @@ export const addFriend = async (req, res) => {
     res.status(402).json({ msg: "Hubo un error" });
   }
 };
+
+export const gettingRequest = async (req, res) => {
+  try {
+    const { idReceptor, nombreEmisor, idEmisor, imagenEmisor } = req.body;
+  console.log(idReceptor, nombreEmisor, idEmisor, imagenEmisor );
+
+  const solicitud = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
+  
+  solicitud.save()
+
+  res.json({ solicitud});
+  } catch (error) {
+    res.status(401).json({msg :"Error al enviar la solicitud"})
+  }
+
+};
+
+export const getSolicitudes = async (req, res )=> {
+  const {idReceptor} = req.body
+  console.log(idReceptor)
+    const solicitudes =  await  Request.find({idReceptor})
+     console.log("solicitudes",solicitudes)
+      
+      res.json({solicitudes})
+}

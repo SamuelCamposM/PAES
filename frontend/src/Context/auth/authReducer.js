@@ -8,7 +8,8 @@ import {REGISTRO_EXITOSO,
   GET_USERS_ERROR,
   GET_USUARIOS ,
   CARGAR_AMIGOS ,
-  CARGAR_AMIGOS_ERR
+  CARGAR_AMIGOS_ERR,
+  GET_SOLICITUDES
 } from "../../types"
 
   
@@ -82,6 +83,11 @@ export default (state, action) => {
           return {
             ...state ,
             mensaje : action.payload
+          }
+          case GET_SOLICITUDES : 
+          return {
+            ...state ,
+            solicitudes : action.payload
           }
     default:
       return state;

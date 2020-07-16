@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, Fragment } from "react";
 import authContext from "../Context/auth/authContext";
-import {  Title, LeftContainer  ,RightContainer } from "../style/styleHome";
+
 import { Titulo } from "../style/style";
 import UserCard from "./cards/UserCard";
 import styled from "@emotion/styled";
+import CardSoliciud from "./cards/CardSolicitud";
 
 
 const Texto = styled.h1`
@@ -47,16 +48,20 @@ grid-column-gap: 20px;
 }
 `
 const Usuarios = () => {
-  const { obtenerUsuarios, usuarios , usuario } = useContext(authContext);
+  const { obtenerUsuarios, usuarios , usuario ,solicitudes ,obtenerSolicitudes } = useContext(authContext);
   useEffect(() => {
     if (!usuarios ) {
         obtenerUsuarios();
         
     }
-}, [usuarios ]);
+    if (!solicitudes && usuario) {
+      obtenerSolicitudes(usuario._id)
+      
+    }
+}, [usuarios ,solicitudes ,usuario ]);
   if (!usuarios) return <Titulo> Usuarios </Titulo>;
    if(!usuario) return null
-console.log(usuario)
+
   return (
     <Fragment>
         <Titulo> Usuarios </Titulo>
@@ -68,7 +73,15 @@ console.log(usuario)
        <UserCard usuario={user}  key={user._id} />
           ))}
         </ColumnaIzquierda>
-     
+     <ColumnaIzquierda>
+        <Texto> Solicitudes</Texto>
+  
+{solicitudes ? solicitudes.map((solicitud)=> (
+  <CardSoliciud solicitud={solicitud} key={solicitud._id}/>
+)) :  <Texto> No hay solicitudes</Texto> }
+
+
+     </ColumnaIzquierda>
       </Contenedor>
     </Fragment>
   );
