@@ -2,9 +2,9 @@ import React, { useContext, useEffect, Fragment } from "react";
 import authContext from "../Context/auth/authContext";
 
 import { Titulo } from "../style/style";
-import UserCard from "./cards/UserCard";
+import UserCard from "../components/cards/UserCard";
 import styled from "@emotion/styled";
-import CardSoliciud from "./cards/CardSolicitud";
+import CardSoliciud from "../components/cards/CardSolicitud";
 
 
 const Texto = styled.h1`

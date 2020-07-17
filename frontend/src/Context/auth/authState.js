@@ -22,7 +22,10 @@ import {
   CARGAR_AMIGOS,
   CARGAR_AMIGOS_ERR,
   GET_SOLICITUDES,
-  DELTE_SOLICITUD
+  GET_SOLICITUDES_ERROR,
+  DELTE_SOLICITUD,
+  DELTE_SOLICITUD_ERROR,
+  SENDING_REQUEST_ERROR
 } from "../../types";
 
 const AuthState = (props) => {
@@ -199,11 +202,26 @@ const AuthState = (props) => {
       //funcion que colocca  el token en el header
       tokenAuth(token);
     }
+  try {
     console.log(datos);
     const solicitud = await clienteAxios.post("/usuarios/gettigRequest", datos);
     console.log(solicitud);
+
+    //ACA IRA EL REALTIME
+  } catch (error) {
+    const alerta = {
+      msg: error.response.data.msg,
+      categoria: " alerta Error",
+    };
+    dispatch({
+      type: SENDING_REQUEST_ERROR,
+      payload: alerta,
+    });
+  }
   };
 
+
+  //funcion que obtiene las solicitudes
   const obtenerSolicitudes = async (idReceptor) => {
     try {
       const token = localStorage.getItem("token");
@@ -221,7 +239,14 @@ const AuthState = (props) => {
         payload: solicitudes.data.solicitudes,
       });
     } catch (error) {
-      console.log(error);
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: " alerta Error",
+      };
+      dispatch({
+        type: GET_SOLICITUDES_ERROR,
+        payload: alerta,
+      });
     }
   };
 
@@ -239,7 +264,14 @@ dispatch({
   payload : solicitud.data.solicitud._id
 })
 } catch (error) {
-  
+  const alerta = {
+    msg: error.response.data.msg,
+    categoria: " alerta Error",
+  };
+  dispatch({
+    type: DELTE_SOLICITUD_ERROR,
+    payload: alerta,
+  });
 }
 
   }

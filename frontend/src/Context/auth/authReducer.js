@@ -12,6 +12,9 @@ import {
   CARGAR_AMIGOS_ERR,
   GET_SOLICITUDES,
   DELTE_SOLICITUD,
+  DELTE_SOLICITUD_ERROR,
+  SENDING_REQUEST_ERROR,
+  GET_SOLICITUDES_ERROR,
 } from "../../types";
 
 export default (state, action) => {
@@ -77,6 +80,10 @@ export default (state, action) => {
       };
 
     case CARGAR_AMIGOS_ERR:
+      case  SENDING_REQUEST_ERROR :
+        case GET_USERS_ERROR :
+          case GET_SOLICITUDES_ERROR :
+            case DELTE_SOLICITUD_ERROR :
       return {
         ...state,
         mensaje: action.payload,

@@ -7,9 +7,7 @@ import PreguntaContext from './PreguntaContext';
 
 import {
     GET_PREGUNTAS_MATH,
-GET_PREGUNTAS_SOCIELES,
-GET_PREGUNTAS_CIENCIAS,
-GET_PREGUNTAS_LENGUAJE,
+
 } from "../../types/index"
 
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { ProfileAvatar, AddFriend, DeleteFriend } from "../../style/cards";
 import authContext from "../../Context/auth/authContext";

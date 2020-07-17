@@ -4,7 +4,7 @@ import { Titulo } from '../style/style'
 
 
 const GameMode = (props) => {
-   const [params, setparams] = useState(props.history.location.pathname) 
+   const [params] = useState(props.history.location.pathname) 
     const parametro = params.split('/') 
     console.log(parametro[2])
     return ( 

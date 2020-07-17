@@ -1,18 +1,19 @@
 //dependencias
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-//componentes
-import Registrarse from "./components/Registrarse";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import Spinner from "./components/Spinner";
-import Estadisticas from "./components/Estadisticas";
-import Perfil from "./components/Perfil";
-import Jugar from "./components/Jugar";
-import Header from "./components/layouts/Header";
-import GameMode from "./components/GameMode";
-import Usuarios from "./components/Usuarios";
+//vistas
+import Registrarse from "./views/Registrarse";
+import Login from "./views/Login";
+import Home from "./views/Home";
+import Spinner from "./views/Spinner";
+import Estadisticas from "./views/Estadisticas";
+import Perfil from "./views/Perfil";
+import Jugar from "./views/Jugar";
+import Usuarios from "./views/Usuarios";
+import GameMode from "./views/GameMode";
 
+//componentes
+import Header from "./components/layouts/Header";
 //Higher order component
 import RutaPrivada from "./components/rutas/RutaPrivada";
 import RutaPrivadaJugar from "./components/rutas/RutaPrivadaJugar";
@@ -61,7 +62,11 @@ function App() {
                 path="/Jugar/:gameMode"
                 component={GameMode}
               />
-              <RutaPrivadaUsuarios exact path="/Usuarios" component={Usuarios} />
+              <RutaPrivadaUsuarios
+                exact
+                path="/Usuarios"
+                component={Usuarios}
+              />
             </Switch>
           </Router>
         </AuthState>

@@ -108,14 +108,13 @@ export const obtenerUsuarios = async (req, res) => {
     
     res.json({ usuarios });
   } catch (error) {
-    res.json({ msg: "hubo un error" });
+    res.json({ msg: "hubo un error al obtener usuarios" });
   }
 };
 
 export const addFriend = async (req, res) => {
   try {
-    
-    
+
 const {idReceptor, idEmisor , _id} = req.body
      let user = await Usuario.findOne(
        { _id :idEmisor },
@@ -144,7 +143,7 @@ const {idReceptor, idEmisor , _id} = req.body
      res.status(200).json({ amigos: user.amigos  });
 } catch (error) {
     
-    res.status(402).json({ msg: "Hubo un error" });
+    res.status(402).json({ msg: "Hubo un al enviar aceptar la solicitud" });
   }
 };
 
@@ -165,18 +164,26 @@ export const gettingRequest = async (req, res) => {
 };
 
 export const getSolicitudes = async (req, res )=> {
+try {
   const {idReceptor} = req.body
   
-    const solicitudes =  await  Request.find({idReceptor})
-     
-      
-      res.json({solicitudes})
+  const solicitudes =  await  Request.find({idReceptor})
+   
+    
+    res.json({solicitudes})
+} catch (error) {
+  res.status(402).json({msg: "Hubo un error al cargar las solicitudes de amistad" })
+}
 }
 
 export const deleteSolicitudes = async (req , res )=> {
+try {
   const  {_id} = req.body
-console.log(req.body)
-  const solicitud  = await Request.findOneAndDelete({_id})
-
-  res.json({solicitud})
+  console.log(req.body)
+    const solicitud  = await Request.findOneAndDelete({_id})
+  
+    res.json({solicitud})
+} catch (error) {
+res.status(402).json({msg :"Hubo un error con la solicitud de amistad"})
+}
 }

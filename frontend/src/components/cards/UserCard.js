@@ -4,7 +4,7 @@ import authContext from "../../Context/auth/authContext";
 import { Card,  ProfileAvatar, AddFriend  , DeleteFriend} from "../../style/cards";
 
 const UserCard = (props) => {
-  const { usuario, agregarAmigo, enviarSolicitud , solicitudes} = useContext(authContext);
+  const { usuario,  enviarSolicitud } = useContext(authContext);
   if (usuario._id === props.usuario._id) return null;
   const datos = {
     idReceptor: props.usuario._id,

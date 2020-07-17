@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from "react";
-import Header from "./layouts/Header";
+
 import { Contenedor, Image, RightContainer, Texto } from "../style/styleHome";
 import { Titulo } from "../style/style";
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+
 
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";

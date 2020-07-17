@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect } from "react";
 import authContext from "../Context/auth/authContext";
-import Header from "./layouts/Header";
 
-import styled from "@emotion/styled";
+
+
 import { Titulo } from "../style/style";
 import {
   Submenu,

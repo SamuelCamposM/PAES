@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, Fragment ,useState} from "react";
+import React, { useContext,  Fragment } from "react";
 import authContext from "../../Context/auth/authContext";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import axios from "axios"
+
 
 const Cabecera = styled.header`
   width: 100%;
@@ -97,10 +97,10 @@ const Enlace = styled(Link)`
     }
 `;
 
-const Header = (props) => {
+const Header = () => {
   
   //extraer informacion de usuario
-  const { usuario, usuarioAutenticado, cerrarSesion } = useContext(authContext);
+  const { usuario,  cerrarSesion } = useContext(authContext);
 
 if(!usuario) return null 
   return (
