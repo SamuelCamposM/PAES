@@ -25,7 +25,8 @@ import {
   GET_SOLICITUDES_ERROR,
   DELTE_SOLICITUD,
   DELTE_SOLICITUD_ERROR,
-  SENDING_REQUEST_ERROR
+  SENDING_REQUEST_ERROR,
+  ELIMINAR_AMIGO
 } from "../../types";
 
 const AuthState = (props) => {
@@ -202,25 +203,27 @@ const AuthState = (props) => {
       //funcion que colocca  el token en el header
       tokenAuth(token);
     }
-  try {
-    console.log(datos);
-    const solicitud = await clienteAxios.post("/usuarios/gettigRequest", datos);
-    console.log(solicitud);
+    try {
+      console.log(datos);
+      const solicitud = await clienteAxios.post(
+        "/usuarios/gettigRequest",
+        datos
+      );
+      console.log(solicitud);
 
-    //ACA IRA EL REALTIME
-  } catch (error) {
-    const alerta = {
-      msg: error.response.data.msg,
-      categoria: " alerta Error",
-    };
-    dispatch({
-      type: SENDING_REQUEST_ERROR,
-      payload: alerta,
-    });
-  }
+      //ACA IRA EL REALTIME
+    } catch (error) {
+      console.log(error.response.data.msg);
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: " alerta Error",
+      };
+      dispatch({
+        type: SENDING_REQUEST_ERROR,
+        payload: alerta,
+      });
+    }
   };
-
-
   //funcion que obtiene las solicitudes
   const obtenerSolicitudes = async (idReceptor) => {
     try {
@@ -251,31 +254,52 @@ const AuthState = (props) => {
   };
 
   const deleteFriendRequest = async (_id) => {
-try {
-  const token = localStorage.getItem("token");
-  if (token) {
-    //funcion que colocca  el token en el header
-    tokenAuth(token);
-  }
-  const solicitud = await clienteAxios.post("/usuarios/deleteSolicitudes",  _id);
-console.log(solicitud)
-dispatch({
-  type: DELTE_SOLICITUD,
-  payload : solicitud.data.solicitud._id
-})
-} catch (error) {
-  const alerta = {
-    msg: error.response.data.msg,
-    categoria: " alerta Error",
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        //funcion que colocca  el token en el header
+        tokenAuth(token);
+      }
+      const solicitud = await clienteAxios.post(
+        "/usuarios/deleteSolicitudes",
+        _id
+      );
+      console.log(solicitud);
+      dispatch({
+        type: DELTE_SOLICITUD,
+        payload: solicitud.data.solicitud._id,
+      });
+    } catch (error) {
+      const alerta = {
+        msg: error.response.data.msg,
+        categoria: " alerta Error",
+      };
+      dispatch({
+        type: DELTE_SOLICITUD_ERROR,
+        payload: alerta,
+      });
+    }
   };
+
+  const eliminarAmigo = async (datos) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //funcion que colocca  el token en el header
+      tokenAuth(token);
+    }
+
+try {
+  const amigoEliminado = await clienteAxios.post("/usuarios/deleteFriend" , datos);
+  console.log(amigoEliminado)
   dispatch({
-    type: DELTE_SOLICITUD_ERROR,
-    payload: alerta,
-  });
+    type: ELIMINAR_AMIGO,
+    payload :amigoEliminado.data.idReceptor
+  })
+} catch (error) {
+  
 }
 
-  }
-
+  };
   return (
     <authContext.Provider
       value={{
@@ -298,7 +322,8 @@ dispatch({
         agregarAmigo,
         enviarSolicitud,
         obtenerSolicitudes,
-        deleteFriendRequest
+        deleteFriendRequest,
+        eliminarAmigo
       }}
     >
       {props.children}

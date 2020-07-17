@@ -4,7 +4,7 @@ import authContext from "../../Context/auth/authContext";
 import { Card,  ProfileAvatar, AddFriend  , DeleteFriend} from "../../style/cards";
 
 const UserCard = (props) => {
-  const { usuario,  enviarSolicitud } = useContext(authContext);
+  const { usuario,  enviarSolicitud ,eliminarAmigo} = useContext(authContext);
   if (usuario._id === props.usuario._id) return null;
   const datos = {
     idReceptor: props.usuario._id,
@@ -15,6 +15,10 @@ const UserCard = (props) => {
   const HandleClick = () => {
     enviarSolicitud(datos);
   };
+
+  const deleteFriend = () => {
+    eliminarAmigo(datos)
+  }
   const agregado = usuario.amigos.some((amigo) => amigo === props.usuario._id);
   return (
     <Fragment>
@@ -22,7 +26,7 @@ const UserCard = (props) => {
         <ProfileAvatar src={props.usuario.avatar} alt="imagen de perfil" />
         <h5>{props.usuario.nombre} </h5>
         {agregado ? (
-          <DeleteFriend onClick={() => HandleClick()}> Eliminar Amigo</DeleteFriend>
+          <DeleteFriend onClick={() => deleteFriend()}> Eliminar Amigo</DeleteFriend>
         ) : (
           <AddFriend onClick={() => HandleClick()}> agregar </AddFriend>
         )}

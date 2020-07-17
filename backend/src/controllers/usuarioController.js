@@ -47,14 +47,13 @@ export const crearUsuario = async (req, res) => {
       }
     );
   } catch (error) {
-    
     res.json({ msg: "error al crear usuario" });
   }
 };
 
 export const iniciarSesion = async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
     let usuario = await Usuario.findOne({ email });
     if (!usuario) {
@@ -87,7 +86,6 @@ export const iniciarSesion = async (req, res) => {
       }
     );
   } catch (error) {
-    
     res.status(401).json({ msg: "error al crear usuario" });
   }
 };
@@ -105,7 +103,7 @@ export const autenticarUsuario = async (req, res) => {
 export const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find().select("-password");
-    
+
     res.json({ usuarios });
   } catch (error) {
     res.json({ msg: "hubo un error al obtener usuarios" });
@@ -114,35 +112,33 @@ export const obtenerUsuarios = async (req, res) => {
 
 export const addFriend = async (req, res) => {
   try {
+    const { idReceptor, idEmisor, _id } = req.body;
+    let user = await Usuario.findOne(
+      { _id: idEmisor },
+      { amigos: idReceptor },
+      { "amigos.$": false }
+    );
 
-const {idReceptor, idEmisor , _id} = req.body
-     let user = await Usuario.findOne(
-       { _id :idEmisor },
-       { amigos: idReceptor},
-       { "amigos.$": false }
-     );
-     
-     let resultado = await user.amigos.some((amigo) => amigo === idReceptor);
- 
-     if (resultado) {
-       return res.status(401).json({ msg: "usuario ya agregado" });
-     }
-     //agregando como amigo al usuario seleccionado
-     await Usuario.update({ _id :idEmisor }, { $push: { amigos: idReceptor  } });
-     //agregandome como amigo del usuario seleccionado
-     await Usuario.update({ _id: idReceptor  }, { $push: { amigos:idEmisor} });
-     //devolviendo amigos actualizados
-     user = await Usuario.findOne(
-       {  _id :idReceptor },
-       { amigos: idEmisor },
-       { "amigos.$": false }
-     );
-     
-     await Request.findOneAndDelete({_id})
-     
-     res.status(200).json({ amigos: user.amigos  });
-} catch (error) {
-    
+    let resultado = await user.amigos.some((amigo) => amigo === idReceptor);
+
+    if (resultado) {
+      return res.status(401).json({ msg: "usuario ya agregado" });
+    }
+    //agregando como amigo al usuario seleccionado
+    await Usuario.update({ _id: idEmisor }, { $push: { amigos: idReceptor } });
+    //agregandome como amigo del usuario seleccionado
+    await Usuario.update({ _id: idReceptor }, { $push: { amigos: idEmisor } });
+    //devolviendo amigos actualizados
+    user = await Usuario.findOne(
+      { _id: idReceptor },
+      { amigos: idEmisor },
+      { "amigos.$": false }
+    );
+
+    await Request.findOneAndDelete({ _id });
+
+    res.status(200).json({ amigos: user.amigos });
+  } catch (error) {
     res.status(402).json({ msg: "Hubo un al enviar aceptar la solicitud" });
   }
 };
@@ -150,40 +146,63 @@ const {idReceptor, idEmisor , _id} = req.body
 export const gettingRequest = async (req, res) => {
   try {
     const { idReceptor, nombreEmisor, idEmisor, imagenEmisor } = req.body;
+    console.log("idEmisor", idEmisor, "idReceptor", idReceptor);
+    let solicitudes = await Request.find(
+      { idReceptor },
+      { idEmisor, idReceptor }
+    );
+let existe = solicitudes.some(solicitud => solicitud.idEmisor === idEmisor )
 
+if (existe ) {
+  return res.status(401).json({msg:"solicitud ya enviada"})
+}
+     solicitudes = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
 
-  const solicitud = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
-  
-  
-  await solicitud.save()
-  res.json({ solicitud});
+    console.log("solicitud", solicitudes);
+    // await solicitud.save()
+    solicitudes.save()
+    res.json({ solicitudes});
   } catch (error) {
-    res.status(401).json({msg :"Error al enviar la solicitud"})
+    res.status(401).json({ msg: "Error al enviar la solicitud" });
   }
-
 };
 
-export const getSolicitudes = async (req, res )=> {
+export const getSolicitudes = async (req, res) => {
+  try {
+    const { idReceptor } = req.body;
+
+    const solicitudes = await Request.find({ idReceptor });
+
+    res.json({ solicitudes });
+  } catch (error) {
+    res
+      .status(402)
+      .json({ msg: "Hubo un error al cargar las solicitudes de amistad" });
+  }
+};
+
+export const deleteSolicitudes = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    console.log(req.body);
+    const solicitud = await Request.findOneAndDelete({ _id });
+
+    res.json({ solicitud });
+  } catch (error) {
+    res.status(402).json({ msg: "Hubo un error con la solicitud de amistad" });
+  }
+};
+
+export const deleteFriend = async (req, res ) => {
 try {
-  const {idReceptor} = req.body
-  
-  const solicitudes =  await  Request.find({idReceptor})
-   
-    
-    res.json({solicitudes})
+  const { idReceptor, idEmisor } = req.body;
+  console.log("idEmisor", idEmisor, "idReceptor", idReceptor);
+ await Usuario.update({ _id: idEmisor }, { $pull: { amigos: idReceptor } });
+await Usuario.update({ _id:  idReceptor }, { $pull: { amigos:idEmisor } });
+
+  res.json({idReceptor})
 } catch (error) {
-  res.status(402).json({msg: "Hubo un error al cargar las solicitudes de amistad" })
-}
+  res.status(402).json({ msg: "Hubo un error al eliminar amigo" });
 }
 
-export const deleteSolicitudes = async (req , res )=> {
-try {
-  const  {_id} = req.body
-  console.log(req.body)
-    const solicitud  = await Request.findOneAndDelete({_id})
-  
-    res.json({solicitud})
-} catch (error) {
-res.status(402).json({msg :"Hubo un error con la solicitud de amistad"})
-}
 }
