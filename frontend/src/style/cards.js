@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const Card = styled.div`
 margin:10px ;
 
-width:250px;
+width:280px;
 
 display:flex;
 flex-wrap:wrap;
@@ -33,7 +33,7 @@ border-radius:15px 15px 0px 0px;
 `
 
 export const DeleteFriend = styled.button`
-
+font-size:12px;
 color:white;
 border:none;
 background-color:#ab133a;
@@ -46,7 +46,7 @@ font-size:13px;
 }
 `
 export const AddFriend = styled.button`
-font-size:13px;
+font-size:12px;
 color:white;
 border:none;
 background-color:#471882;
@@ -59,6 +59,8 @@ border-radius:3px;
 `
 export const Botones = styled.section`
 display:flex;
-height:15% ;
+width:100%;
+justify-content:space-evenly;
+
 
 `

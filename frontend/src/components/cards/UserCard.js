@@ -27,11 +27,11 @@ const UserCard = (props) => {
   <Card>
     <Imagen src={props.usuario.avatar || "https://wallpaperslinks.com/wp-content/uploads/2020/03/astronaut_art_space_129529_1080x1920.jpg"}  />
     <p>{props.usuario.nombre} </p>
-    <Botones>
+
     {agregado ? <DeleteFriend
-   
+onClick={()=>  deleteFriend()}
     >Borrar amigo</DeleteFriend> : <AddFriend onClick={() => HandleClick()}>Agregar amigo</AddFriend> }
-    </Botones>
+
   </Card>
     
   );
