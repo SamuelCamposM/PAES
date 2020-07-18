@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 
 import authContext from "../../Context/auth/authContext";
-import { Card,  ProfileAvatar, AddFriend  , DeleteFriend} from "../../style/cards";
+import { Card , Imagen , DeleteFriend, Botones, AddFriend} from "../../style/cards";
 
 const UserCard = (props) => {
   const { usuario,  enviarSolicitud ,eliminarAmigo} = useContext(authContext);
@@ -15,6 +15,7 @@ const UserCard = (props) => {
   };
   const HandleClick = () => {
     enviarSolicitud(datos);
+    console.log(datos)
   };
 
   const deleteFriend = () => {
@@ -22,17 +23,17 @@ const UserCard = (props) => {
   }
   const agregado = usuario.amigos.some((amigo) => amigo === props.usuario._id);
   return (
-    <Fragment>
-      <Card>
-        <ProfileAvatar src={props.usuario.avatar} alt="imagen de perfil" />
-        <h5>{props.usuario.nombre} </h5>
-        {agregado ? (
-          <DeleteFriend onClick={() => deleteFriend()}> Eliminar Amigo</DeleteFriend>
-        ) : (
-          <AddFriend onClick={() => HandleClick()}> agregar </AddFriend>
-        )}
-      </Card>
-    </Fragment>
+    
+  <Card>
+    <Imagen src={props.usuario.avatar || "https://wallpaperslinks.com/wp-content/uploads/2020/03/astronaut_art_space_129529_1080x1920.jpg"}  />
+    <p>{props.usuario.nombre} </p>
+    <Botones>
+    {agregado ? <DeleteFriend
+   
+    >Borrar amigo</DeleteFriend> : <AddFriend onClick={() => HandleClick()}>Agregar amigo</AddFriend> }
+    </Botones>
+  </Card>
+    
   );
 };
 

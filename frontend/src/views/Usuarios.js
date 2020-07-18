@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, useEffect, Fragment  , useState} from "react";
 import authContext from "../Context/auth/authContext";
 import errorContext from "../Context/error/errorContext";
 
@@ -7,25 +7,43 @@ import UserCard from "../components/cards/UserCard";
 import styled from "@emotion/styled";
 import CardSoliciud from "../components/cards/CardSolicitud";
 import Amigos from "../components/cards/Amigos";
+import { Submenu , ItemList ,Scrollers } from "../style/styleHome";
 
 
 const Texto = styled.h1`
- text-align:center;
- font-size:25px;
- text-shadow:1px 1px 3px gray;
+text-align:center;
+width:100%;
+margin-top:15px;
 `;
 
-const Columna = styled.div`
+const Columna = styled.section`
 display:flex;
-flex-direction:column;
+width:95%;
+margin:0 auto;
+
+@media(max-width:830px ){
+  flex-wrap:wrap;
+}
+
+
 `
 
 
 export const Contenedor = styled.div`
-display:grid;
-grid-template-columns:repeat(3 , 1fr);
+display:flex;
+
+flex-wrap:wrap;
+`
+const Alerta = styled.div`
+display:flex;
+justify-content:center;
 `
 const Usuarios = () => {
+  const [active, setactive] = useState({
+    solicitudes : false ,
+    todosLosUsuarios : true,
+    amigos: false
+  })
   const { error, mostrarError } = useContext(errorContext);
   const { obtenerUsuarios, usuarios , usuario ,solicitudes ,obtenerSolicitudes , cargarUsuarios , mensaje} = useContext(authContext);
   useEffect(() => {
@@ -50,33 +68,72 @@ const Usuarios = () => {
   if (!usuarios) return <Titulo> Usuarios </Titulo>;
    if(!usuario) return null
 
+   const ChangeActive = e  =>  {
+     setactive({
+       [e] : true
+     })
+   }
   return (
     <Fragment>
-      {error ? <Error>{error.msg}</Error> : null}
-        <Titulo> Usuarios </Titulo>
+        <Alerta>
+
+      {error  ? <Error>{error.msg}</Error> : null}
+        </Alerta>
       <Contenedor>
-        <Columna>
-      <Texto> Todos los usuarios. </Texto>
+        
+      <Submenu id="submenu">
+        <ItemList>
+          <Scrollers
+            onClick={ ()=>  ChangeActive("todosLosUsuarios")}
+              href="#!"
+          >
+            {" "}
+            Todos los usuarios
+          </Scrollers>
+        </ItemList>
+        <ItemList>
+          <Scrollers
+            onClick={ ()=>  ChangeActive("solicitudes")}
+            
+          >
+            {" "}
+            Solicitudes de amistad
+          </Scrollers>
+        </ItemList>
+        <ItemList>
+          <Scrollers
+          
+          onClick={ ()=>  ChangeActive("amigos")}
+          >
+            {" "}
+            Amigos
+          </Scrollers>
+        </ItemList>
+      
+      </Submenu>
+      
+  {active.todosLosUsuarios ?     <Texto> Todos los usuarios. </Texto> : null}
+       {active.todosLosUsuarios ?  <Columna>
           {usuarios.map((user) => (
            
        <UserCard usuario={user}  key={user._id} />
           ))}
-        </Columna>
-     <Columna>
-        <Texto> Solicitudes.</Texto>
-  
+        </Columna> : null}
+ {active.solicitudes ?      <Texto> Solicitudes de amistad. </Texto> : null}
+        {active.solicitudes ?  <Columna >
 {solicitudes  ? solicitudes.map((solicitud )=> (
   <CardSoliciud solicitud={solicitud} key={solicitud._id}/>
-)) :  <Texto> No hay solicitudes.</Texto> }
+  )) : null} 
+               </Columna> :  null}
 
-     </Columna>
-     <Columna>
- <Texto> Amigos. </Texto>
+               {active.amigos ?     <Texto> Amigos. </Texto> : null}      
+ {active.amigos ?     <Columna>
+ 
           {usuarios.map((user) => (
            
        <Amigos usuario={user}  key={user._id} />
           ))}
-          </Columna>
+          </Columna> :null}
       </Contenedor>
     </Fragment>
   );

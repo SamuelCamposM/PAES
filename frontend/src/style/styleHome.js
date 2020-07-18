@@ -63,16 +63,26 @@ margin-top:70px;
 `;
 
 export const Submenu = styled.ul`
-width: 100%;
+width: 90%;
 display: flex;
-margin: 0 auto;
+margin: 10px auto;
 height: 8vh;
 align-items: center;
-justify-content: space-around;
+justify-content: space-evenly;
 text-align: center;
 list-style: none;
 
 transition:all 500ms;
+@media(max-width:800px ){
+  margin-top:15px;
+  flex-grow:1;
+}
+
+@media(max-width:500px ){
+  margin-top:35px;
+  margin-bottom:20px;
+  flex-grow:1;
+}
 `;
 export const ItemList = styled.li`
 margin-top: 15px;

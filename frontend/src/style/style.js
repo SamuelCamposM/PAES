@@ -155,4 +155,9 @@ margin-top:20px;
 text-align:center;
 width:40%;
 margin:0 auto;
+position:fixed;
+
+margin-top:20px ;
+
+
 `

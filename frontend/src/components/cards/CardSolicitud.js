@@ -1,18 +1,8 @@
 import React, { useContext } from "react";
-import styled from "@emotion/styled";
-import { ProfileAvatar, AddFriend, DeleteFriend } from "../../style/cards";
+
+
 import authContext from "../../Context/auth/authContext";
-
-const ImgBox = styled.div`
- 
-`;
-
-const Botones = styled.div`
-
-`;
-const Card = styled.article`
-
-`;
+import { Card , Imagen , DeleteFriend, Botones, AddFriend} from "../../style/cards";
 
 const CardSolicitud = ({ solicitud }) => {
   const { agregarAmigo , deleteFriendRequest } = useContext(authContext);
@@ -28,20 +18,15 @@ const CardSolicitud = ({ solicitud }) => {
     deleteFriendRequest({_id: solicitud._id})
   }
   return (
-    <>
-      <Card>
-        <ImgBox>
-          <ProfileAvatar src={solicitud.imagenEmisor} />
-          <p>{solicitud.nombreEmisor}</p>
-        </ImgBox>
-        <Botones>
-          <AddFriend onClick={() => handleClick()}>Agregar Amigo</AddFriend>
-          <DeleteFriend onClick={() => eliminarSolicitud()}>
-            Eliminar solicitud
-          </DeleteFriend>
-        </Botones>
-      </Card>
-    </>
+   
+   <Card>
+      <Imagen src={solicitud.imagenEmisor || "https://wallpaperslinks.com/wp-content/uploads/2020/03/astronaut_art_space_129529_1080x1920.jpg"}  />
+    <p>{solicitud.nombreEmisor} </p>
+    <Botones>
+    <DeleteFriend onClick={()=> eliminarSolicitud()}   >Rechazar soliciud</DeleteFriend>  <AddFriend  onClick={()=>  handleClick()} >Aceptar solicitud</AddFriend> 
+    </Botones>
+   </Card>
+   
   );
 };
 
