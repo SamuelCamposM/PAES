@@ -4,44 +4,14 @@ import { ProfileAvatar, AddFriend, DeleteFriend } from "../../style/cards";
 import authContext from "../../Context/auth/authContext";
 
 const ImgBox = styled.div`
-  width: 70%;
-  align-items: center;
-  justify-content: space-between;
-  display: flex;
-  margin: 0 auto;
-  height: 70%;
-  & p {
-    width: 100%;
-    text-align: center;
-  }
+ 
 `;
 
 const Botones = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-left: 10px;
-  padding-right: 10px;
+
 `;
 const Card = styled.article`
-  height: 170px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
 
-  margin: 10px;
-  align-content: center;
-  justify-content: space-between;
-  border-radius: 10px;
-  box-shadow: 2px 2px 3px gray;
-  background-color: #ccc;
-  &:hover {
-  }
-  & h5 {
-    text-align: center;
-  }
 `;
 
 const CardSolicitud = ({ solicitud }) => {

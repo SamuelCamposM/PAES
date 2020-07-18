@@ -10,8 +10,7 @@ const UserCard = (props) => {
     idReceptor: props.usuario._id,
     nombreEmisor:  usuario.nombre,
     idEmisor: usuario._id,
-    imagenEmisor: usuario.avatar || "",
-    nombreReceptor : props.usuario.nombre
+    imagenEmisor: usuario.avatar || ""
   };
   const HandleClick = () => {
     enviarSolicitud(datos);
@@ -21,6 +20,7 @@ const UserCard = (props) => {
     eliminarAmigo(datos)
   }
   const agregado = usuario.amigos.some((amigo) => amigo === props.usuario._id);
+  if(!agregado )return null
   return (
     <Fragment>
       <Card>

@@ -152,4 +152,7 @@ color:white;
 border-radius:25px;
 padding:10px;
 margin-top:20px;
+text-align:center;
+width:40%;
+margin:0 auto;
 `

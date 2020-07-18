@@ -60,14 +60,14 @@ export default (state, action) => {
         solicitudes: null,
       };
     case GET_USUARIOS:
-      console.log("cargando usuarios");
+      
       return {
         ...state,
         usuarios: action.payload,
         cargarUsuarios: false,
       };
     case CARGAR_AMIGOS:
-      console.log(action.payload);
+      
       let usuario = {
         ...state.usuario,
         amigos: action.payload,
@@ -102,13 +102,13 @@ export default (state, action) => {
       };
     case ELIMINAR_AMIGO:
       let user = state.usuario;
-      console.log(user);
-      console.log(action.payload);
+      
+      
       user.amigos = user.amigos.filter((amigo) => {
-        console.log(amigo);
+      
         return amigo !== action.payload;
       });
-      console.log(user);
+      
       return {
         ...state,
         usuario: user,

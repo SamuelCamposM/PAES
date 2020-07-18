@@ -145,20 +145,20 @@ export const addFriend = async (req, res) => {
 
 export const gettingRequest = async (req, res) => {
   try {
-    const { idReceptor, nombreEmisor, idEmisor, imagenEmisor } = req.body;
-    console.log("idEmisor", idEmisor, "idReceptor", idReceptor);
+    const { idReceptor, nombreEmisor, idEmisor, imagenEmisor , nombreReceptor } = req.body;
+    
     let solicitudes = await Request.find(
       { idReceptor },
-      { idEmisor, idReceptor }
-    );
-let existe = solicitudes.some(solicitud => solicitud.idEmisor === idEmisor )
+      { idEmisor, idReceptor  }
+      );
+      console.log("solicitud", solicitudes);
+      let existe = solicitudes.some(solicitud => solicitud.idEmisor === idEmisor )
 
 if (existe ) {
-  return res.status(401).json({msg:"solicitud ya enviada"})
+  return res.status(401).json({msg:`solicitud ya enviada a ${nombreReceptor}`})
 }
      solicitudes = new Request({idReceptor, nombreEmisor, idEmisor, imagenEmisor })
 
-    console.log("solicitud", solicitudes);
     // await solicitud.save()
     solicitudes.save()
     res.json({ solicitudes});
@@ -184,7 +184,7 @@ export const getSolicitudes = async (req, res) => {
 export const deleteSolicitudes = async (req, res) => {
   try {
     const { _id } = req.body;
-    console.log(req.body);
+    
     const solicitud = await Request.findOneAndDelete({ _id });
 
     res.json({ solicitud });
@@ -196,7 +196,7 @@ export const deleteSolicitudes = async (req, res) => {
 export const deleteFriend = async (req, res ) => {
 try {
   const { idReceptor, idEmisor } = req.body;
-  console.log("idEmisor", idEmisor, "idReceptor", idReceptor);
+  
  await Usuario.update({ _id: idEmisor }, { $pull: { amigos: idReceptor } });
 await Usuario.update({ _id:  idReceptor }, { $pull: { amigos:idEmisor } });
 

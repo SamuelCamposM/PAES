@@ -10,12 +10,13 @@ flex-wrap: wrap;
 flex-grow: 1;
 display: grid;
 grid-template-columns: 1.2fr 1fr;
-grid-template-rows: 0.9fr 0.9fr 0.9fr 0.9fr;
+grid-template-rows: repeat(5, 71vh);
 grid-column-gap: 20px;
 @media (max-width: 980px) {
+grid-template-rows: 0.9fr 0.9fr 0.9fr 0.9fr;
   grid-template-columns: 1fr;
   grid-row-gap: 20px;
-  
+  grid-column-gap: 0px;
 }
 `;
 

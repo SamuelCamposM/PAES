@@ -26,7 +26,7 @@ import {
   DELTE_SOLICITUD,
   DELTE_SOLICITUD_ERROR,
   SENDING_REQUEST_ERROR,
-  ELIMINAR_AMIGO
+  ELIMINAR_AMIGO,
 } from "../../types";
 
 const AuthState = (props) => {
@@ -204,16 +204,10 @@ const AuthState = (props) => {
       tokenAuth(token);
     }
     try {
-      console.log(datos);
-      const solicitud = await clienteAxios.post(
-        "/usuarios/gettigRequest",
-        datos
-      );
-      console.log(solicitud);
+      await clienteAxios.post("/usuarios/gettigRequest", datos);
 
       //ACA IRA EL REALTIME
     } catch (error) {
-      console.log(error.response.data.msg);
       const alerta = {
         msg: error.response.data.msg,
         categoria: " alerta Error",
@@ -226,17 +220,16 @@ const AuthState = (props) => {
   };
   //funcion que obtiene las solicitudes
   const obtenerSolicitudes = async (idReceptor) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //funcion que colocca  el token en el header
+      tokenAuth(token);
+    }
     try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        //funcion que colocca  el token en el header
-        tokenAuth(token);
-      }
-      console.log(idReceptor);
       const solicitudes = await clienteAxios.post("/usuarios/getSolicitudes", {
         idReceptor,
       });
-      console.log(solicitudes);
+
       dispatch({
         type: GET_SOLICITUDES,
         payload: solicitudes.data.solicitudes,
@@ -264,7 +257,7 @@ const AuthState = (props) => {
         "/usuarios/deleteSolicitudes",
         _id
       );
-      console.log(solicitud);
+
       dispatch({
         type: DELTE_SOLICITUD,
         payload: solicitud.data.solicitud._id,
@@ -288,17 +281,17 @@ const AuthState = (props) => {
       tokenAuth(token);
     }
 
-try {
-  const amigoEliminado = await clienteAxios.post("/usuarios/deleteFriend" , datos);
-  console.log(amigoEliminado)
-  dispatch({
-    type: ELIMINAR_AMIGO,
-    payload :amigoEliminado.data.idReceptor
-  })
-} catch (error) {
-  
-}
+    try {
+      const amigoEliminado = await clienteAxios.post(
+        "/usuarios/deleteFriend",
+        datos
+      );
 
+      dispatch({
+        type: ELIMINAR_AMIGO,
+        payload: amigoEliminado.data.idReceptor,
+      });
+    } catch (error) {}
   };
   return (
     <authContext.Provider
@@ -323,7 +316,7 @@ try {
         enviarSolicitud,
         obtenerSolicitudes,
         deleteFriendRequest,
-        eliminarAmigo
+        eliminarAmigo,
       }}
     >
       {props.children}
