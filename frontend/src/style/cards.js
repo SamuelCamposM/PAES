@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const Card = styled.div`
 margin:10px ;
 
-width:280px;
+width:275px;
 
 display:flex;
 flex-wrap:wrap;
@@ -46,6 +46,7 @@ font-size:13px;
 }
 `
 export const AddFriend = styled.button`
+width:40%;
 font-size:12px;
 color:white;
 border:none;

@@ -291,8 +291,13 @@ const AuthState = (props) => {
         type: ELIMINAR_AMIGO,
         payload: amigoEliminado.data.idReceptor,
       });
-    } catch (error) {}
+    } catch (error) {
+
+    }
   };
+  const subirImagen = async   datos => {
+    const url = clienteAxios.post('/imagen/upload', datos)
+  }
   return (
     <authContext.Provider
       value={{
@@ -305,6 +310,7 @@ const AuthState = (props) => {
         usuarios: state.usuarios,
         solicitudes: state.solicitudes,
         cargarUsuarios: state.cargarUsuarios,
+        
         //funciones
         registrarUsuario,
         iniciarSesion,
@@ -317,6 +323,7 @@ const AuthState = (props) => {
         obtenerSolicitudes,
         deleteFriendRequest,
         eliminarAmigo,
+        subirImagen
       }}
     >
       {props.children}

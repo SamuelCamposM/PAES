@@ -20,7 +20,7 @@ const CardSolicitud = ({ solicitud }) => {
   return (
    
    <Card>
-      <Imagen src={solicitud.imagenEmisor || "https://wallpaperslinks.com/wp-content/uploads/2020/03/astronaut_art_space_129529_1080x1920.jpg"}  />
+      <Imagen src={solicitud.imagenEmisor || "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"}  />
     <p>{solicitud.nombreEmisor} </p>
     <Botones>
     <DeleteFriend onClick={()=> eliminarSolicitud()}   >Rechazar soliciud</DeleteFriend>  <AddFriend  onClick={()=>  handleClick()} >Aceptar solicitud</AddFriend> 

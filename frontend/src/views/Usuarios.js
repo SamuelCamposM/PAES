@@ -20,19 +20,15 @@ const Columna = styled.section`
 display:flex;
 width:95%;
 margin:0 auto;
+flex-wrap:wrap;
+justify-content:space-between;
 
-@media(max-width:830px ){
-  flex-wrap:wrap;
-}
 
 
 `
 
 
 export const Contenedor = styled.div`
-display:flex;
-
-flex-wrap:wrap;
 `
 const Alerta = styled.div`
 display:flex;

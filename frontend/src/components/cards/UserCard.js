@@ -25,7 +25,7 @@ const UserCard = (props) => {
   return (
     
   <Card>
-    <Imagen src={props.usuario.avatar || "https://wallpaperslinks.com/wp-content/uploads/2020/03/astronaut_art_space_129529_1080x1920.jpg"}  />
+    <Imagen src={props.usuario.avatar || "https://images3.alphacoders.com/106/1069102.jpg"}  />
     <p>{props.usuario.nombre} </p>
 
     {agregado ? <DeleteFriend
