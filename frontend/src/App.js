@@ -16,11 +16,7 @@ import GameMode from "./views/GameMode";
 import Header from "./components/layouts/Header";
 //Higher order component
 import RutaPrivada from "./components/rutas/RutaPrivada";
-import RutaPrivadaJugar from "./components/rutas/RutaPrivadaJugar";
-import RutaPrivadaPerfil from "./components/rutas/RutaPrivadaPerfil";
-import RutaPrivadaEstadisticas from "./components/rutas/RutaPrivadaEstadisticas";
-import GameModePrivada from "./components/rutas/GameModePrivada";
-import RutaPrivadaUsuarios from "./components/rutas/RutaPrivadaUsuarios";
+
 //stilos
 import "./App.css";
 //Context
@@ -49,20 +45,20 @@ function App() {
               <Route exact path="/" component={Registrarse} />
               <Route exact path="/login" component={Login} />
 
-              <RutaPrivadaEstadisticas
+              <RutaPrivada
                 exact
                 path="/Estadisticas"
                 component={Estadisticas}
               />
-              <RutaPrivadaPerfil exact path="/Perfil" component={Perfil} />
-              <RutaPrivadaJugar exact path="/Jugar" component={Jugar} />
+              <RutaPrivada exact path="/Perfil" component={Perfil} />
+              <RutaPrivada exact path="/Jugar" component={Jugar} />
               <RutaPrivada exact path="/Home" component={Home} />
-              <GameModePrivada
+              <RutaPrivada
                 exact
                 path="/Jugar/:gameMode"
                 component={GameMode}
               />
-              <RutaPrivadaUsuarios
+              <RutaPrivada  
                 exact
                 path="/Usuarios"
                 component={Usuarios}
