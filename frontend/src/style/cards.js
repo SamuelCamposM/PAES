@@ -57,6 +57,18 @@ border-radius:3px;
 &:hover{
     background-color:#180233;
 }
+@media (max-width: 700px) {
+    width: 70%;
+  }
+  @media (max-width: 600px) {
+    width: 75%;
+  }
+  @media (max-width: 500px) {
+    width: 80%;
+  }
+  @media (max-width: 400px) {
+    width: 90%;
+  }
 `
 export const Botones = styled.section`
 display:flex;

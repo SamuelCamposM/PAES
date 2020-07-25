@@ -18,12 +18,16 @@ router.post("/upload", token, (req, res) => {
       const { avatar } = await Usuario.findOne({ _id });
       console.log(avatar);
       if (avatar) {
+      try {
         const imagen = avatar.split("/");
         console.log(imagen[5]);
         await unlinkSync(
           path.join(`${__dirname}/../public/images/${imagen[5]}`)
         );
         console.log(path.resolve(`/src/public/images/${imagen[5]}`));
+      } catch (error) {
+        
+      }
       }
 
       const usuario = await Usuario.findOneAndUpdate(
