@@ -15,8 +15,18 @@ app.use(passport.initialize())
 app.use(morgan('dev'))
 app.use(express.json({extended : true }))
 
+const storage = multer.diskStorage({
+    destination: path.join(__dirname , "./public/images"),
+    filename: function(req, file, cb){
+       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+    }
+ });
 
-app.use(multer({dest: path.join(__dirname,"public/img/uploads") }).single('image'))
+
+export const upload = multer({
+   storage: storage,
+   limits:{fileSize: 1000000},
+}).single("myImage");
 //routes
 app.use('/usuarios', require('./routes/usuarios'))
 app.use('/', require('./routes/google'))

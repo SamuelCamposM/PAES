@@ -16,6 +16,7 @@ import {
   SENDING_REQUEST_ERROR,
   GET_SOLICITUDES_ERROR,
   ELIMINAR_AMIGO,
+  CAMBIAR_IMAGEN_EXITO,
 } from "../../types";
 
 export default (state, action) => {
@@ -60,14 +61,12 @@ export default (state, action) => {
         solicitudes: null,
       };
     case GET_USUARIOS:
-      
       return {
         ...state,
         usuarios: action.payload,
         cargarUsuarios: false,
       };
     case CARGAR_AMIGOS:
-      
       let usuario = {
         ...state.usuario,
         amigos: action.payload,
@@ -102,17 +101,27 @@ export default (state, action) => {
       };
     case ELIMINAR_AMIGO:
       let user = state.usuario;
-      
-      
+
       user.amigos = user.amigos.filter((amigo) => {
-      
         return amigo !== action.payload;
       });
-      
+
       return {
         ...state,
         usuario: user,
       };
+    case CAMBIAR_IMAGEN_EXITO:
+      console.log(action.payload)
+      const usuarioNuevo = {
+        ...state.usuario,
+        avatar : action.payload,
+      };
+      console.log(usuarioNuevo)
+      return {
+        ...state,
+        usuario: usuarioNuevo,
+      };
+
     default:
       return state;
   }

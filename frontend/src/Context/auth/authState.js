@@ -27,6 +27,7 @@ import {
   DELTE_SOLICITUD_ERROR,
   SENDING_REQUEST_ERROR,
   ELIMINAR_AMIGO,
+  CAMBIAR_IMAGEN_EXITO
 } from "../../types";
 
 const AuthState = (props) => {
@@ -295,8 +296,26 @@ const AuthState = (props) => {
 
     }
   };
-  const subirImagen = async   datos => {
-    const url = clienteAxios.post('/imagen/upload', datos)
+  const subirImagen = async (file )  => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      //funcion que colocca  el token en el header
+      tokenAuth(token);
+    }
+    const formData = new FormData();
+    formData.append('myImage',file);
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+const data   =  await clienteAxios.post("/imagen/upload",formData,config)
+       console.log(data.data.datos)
+
+  dispatch({
+    type: CAMBIAR_IMAGEN_EXITO,
+    payload: data.data.datos
+  })
   }
   return (
     <authContext.Provider
