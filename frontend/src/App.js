@@ -22,19 +22,20 @@ import "./App.css";
 //Context
 import AuthState from "./Context/auth/authState";
 import ErrorState from "./Context/error/errorState";
-import tokenAuth from "./config/token";
 import PreguntasState from "./Context/Preguntas/PreguntaState";
+import SalaState from "./Context/Salas/SalaState";
 
 //revisar si hay un token
+import tokenAuth from "./config/token";
 const token = localStorage.getItem("token");
 if (token) {
   tokenAuth(token);
 }
 
 function App() {
-  //extraer informacion de usuario
-
+  
   return (
+    <SalaState>
     <PreguntasState>
       <ErrorState>
         <AuthState>
@@ -68,6 +69,7 @@ function App() {
         </AuthState>
       </ErrorState>
     </PreguntasState>
+    </SalaState>
   );
 }
 

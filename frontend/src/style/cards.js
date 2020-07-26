@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const Card = styled.div`
 margin:10px ;
 
-width:275px;
+width:250px;
 
 display:flex;
 flex-wrap:wrap;
