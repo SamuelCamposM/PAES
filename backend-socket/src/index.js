@@ -1,5 +1,6 @@
 import express from "express"
-import socketio from "socket.io"
+
+import "./config/db"
 const app = express()
 
 

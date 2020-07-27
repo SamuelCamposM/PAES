@@ -23,10 +23,10 @@ const SalaState = (props) => {
   const socket = io.connect("http://localhost:4500");
 
   const enviarInvitacion = (invitado) => {
-console.log(invitado)
+
 socket.emit("invitar", { invitado });
 socket.on("invitando", ({invitado})=> {
-  
+  console.log(invitado)
 })
   }
 
